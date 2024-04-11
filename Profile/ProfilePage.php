@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('ProfilePageAction.php');
+include('DisplayProfileAndQuestion');
 ?>
 
 <html>
@@ -87,6 +87,7 @@ include('ProfilePageAction.php');
             </nav>
         </header>
     <main>
+        <!-- profile Name-->
     <div class="container">
         <div class="card-container">
             <!-- Left Card - Profile Image -->
@@ -116,6 +117,36 @@ include('ProfilePageAction.php');
                     <p class="card-text">Here you can display user's profile information.</p>
                 </div>
             </div>
+        </div>
+    </div>
+    <!--Question-->
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên Câu Hỏi</th>
+                        <th scope="col">Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $stt = 1;
+                    foreach ($result as $question) {
+                        echo "<tr>";
+                        echo "<td>$stt</td>";
+                        echo "<td>" . $question['QuestionName'] . "</td>";
+                        // Assuming you have a function to count the number of answers for each question
+                        // $num_answers = countAnswers($question['QuestionId']); // You need to replace countAnswers with your actual function
+                        // echo "<td>$num_answers</td>";
+                        echo "<td><button class='btn btn-danger'>Delete</button></td>";
+                        echo "</tr>";
+                        $stt++;
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
     </main>
