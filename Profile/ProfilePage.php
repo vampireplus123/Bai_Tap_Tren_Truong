@@ -1,6 +1,7 @@
 <?php
 session_start();
-include('DisplayProfileAndQuestion');
+include('DisplayProfileAndQuestion.php');
+
 ?>
 
 <html>
