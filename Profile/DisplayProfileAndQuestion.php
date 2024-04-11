@@ -1,8 +1,5 @@
 <?php
 
-// Bạn cần session_start() ở đầu trang nếu chưa có
-
-
 // Đoạn mã kết nối CSDL và truy vấn dữ liệu
 $servername = "localhost";
 $username = 'root';

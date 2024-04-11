@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('DisplayProfileAndQuestion.php');
-
 ?>
 
 <html>
@@ -138,9 +137,6 @@ include('DisplayProfileAndQuestion.php');
                         echo "<tr>";
                         echo "<td>$stt</td>";
                         echo "<td>" . $question['QuestionName'] . "</td>";
-                        // Assuming you have a function to count the number of answers for each question
-                        // $num_answers = countAnswers($question['QuestionId']); // You need to replace countAnswers with your actual function
-                        // echo "<td>$num_answers</td>";
                         echo "<td><button class='btn btn-danger'>Delete</button></td>";
                         echo "</tr>";
                         $stt++;
