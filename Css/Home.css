@@ -1,0 +1,22 @@
+.Question{
+    font-size: 140%;
+}
+.tag, .answer {
+    font-size: smaller;
+}
+.question-card {
+    margin-bottom: 20px;
+}
+.link{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.search-bar {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 10px; /* Thêm margin dưới để tạo khoảng cách giữa thanh tìm kiếm và các mục khác */
+}
