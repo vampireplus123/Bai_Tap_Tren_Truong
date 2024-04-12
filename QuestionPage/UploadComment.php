@@ -20,7 +20,7 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $question_id = $_POST['ID'];
-        $comment_content = $_POST['ID'];
+        $comment_content = $_POST['comment_content'];
 
         $sql = "INSERT INTO comment (ID, Comment) VALUES (:question_id, :comment_content)";
         $insert_statement = $conn->prepare($sql);
@@ -30,7 +30,7 @@ try {
 
         echo "Comment successfully added.";
 
-        $comment_query = "SELECT Comment FROM comment WHERE ID = :question_id";
+        $comment_query = "SELECT Comment FROM comment WHERE ID = :id";
         $comment_statement = $conn->prepare($comment_query);
         $comment_statement->bindParam(':question_id', $question_id);
         $comment_statement->execute();

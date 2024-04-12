@@ -91,13 +91,19 @@ include ('UploadComment.php');
                     </div>
                 </div>
 
-                <div class="container mt-5" id="comment">
+                <form action="UploadComment.php" method="POST">
+                <input type="hidden" name="id" value="<?php echo $question_result['ID']; ?>">
                     <div class="bg-light p-2" id="comment-upload">
-                            <div class="d-flex flex-row align-items-start"><!--<img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">--><textarea class="form-control ml-1 shadow-none textarea"></textarea></div> 
-                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button></div>
+                        <div class="d-flex flex-row align-items-start">
+                            <!-- Move the textarea inside the form -->
+                            <textarea name="comment_content" class="form-control ml-1 shadow-none textarea"></textarea>
+                        </div>
+                        <div class="mt-2 text-right">
+                            <!-- Change the button type to "submit" to submit the form -->
+                            <button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
+                        </div>
                     </div>
-                    <div class="bg-light p-2" id="comment-uploaded">
-                    </div>
+                </form>
 
                 </div>
             <?php endif; ?>
