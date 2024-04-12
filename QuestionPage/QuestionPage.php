@@ -1,3 +1,7 @@
+
+<?php 
+include ('UploadComment.php');
+?>
 <html>
     <head>
         <link rel="stylesheet" href="/Css/Home.css">
@@ -85,6 +89,16 @@
                                 </div>
                     </div>
                     </div>
+                </div>
+
+                <div class="container mt-5" id="comment">
+                    <div class="bg-light p-2" id="comment-upload">
+                            <div class="d-flex flex-row align-items-start"><!--<img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">--><textarea class="form-control ml-1 shadow-none textarea"></textarea></div> 
+                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button></div>
+                    </div>
+                    <div class="bg-light p-2" id="comment-uploaded">
+                    </div>
+
                 </div>
             <?php endif; ?>
         </div>
