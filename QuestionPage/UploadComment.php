@@ -19,8 +19,8 @@ try {
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $question_id = $_POST['question_id'];
-        $comment_content = $_POST['comment_content'];
+        $question_id = $_POST['ID'];
+        $comment_content = $_POST['ID'];
 
         $sql = "INSERT INTO comment (ID, Comment) VALUES (:question_id, :comment_content)";
         $insert_statement = $conn->prepare($sql);
