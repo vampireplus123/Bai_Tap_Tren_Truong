@@ -114,7 +114,7 @@ include('DisplayProfileAndQuestion.php');
                 ?>
                     <!-- Chỉ hiển thị biến $profileName một lần -->
                     <h5 class="card-title"><?php echo $profileName ?></h5>
-                    <p class="card-text">Here you can display user's profile information.</p>
+                    <p class="card-text">Your Questions: </p>
                 </div>
             </div>
         </div>
@@ -131,17 +131,24 @@ include('DisplayProfileAndQuestion.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                <?php
                     $stt = 1;
+                    // Loop through your questions and display them
                     foreach ($result as $question) {
                         echo "<tr>";
                         echo "<td>$stt</td>";
                         echo "<td>" . $question['QuestionName'] . "</td>";
-                        echo "<td><button class='btn btn-danger'>Delete</button></td>";
+                        echo "<td>
+                                <form action='DeleteQuestion.php' method='post'>
+                                    <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
+                                    <button type='submit' name='delete_question' class='btn btn-danger'>Delete</button>
+                                </form>
+                            </td>"; // Use a form to delete the question
                         echo "</tr>";
                         $stt++;
                     }
                     ?>
+
                 </tbody>
             </table>
         </div>

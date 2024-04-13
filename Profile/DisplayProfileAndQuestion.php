@@ -16,7 +16,7 @@ try {
     $questionPdo = new PDO($questionDsn, $username, $password);
     $questionPdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT user.UserName, questionfield.QuestionName, questionfield.Tag, questionfield.QuestionDetail
+    $query = "SELECT questionfield.ID, user.UserName, questionfield.QuestionName, questionfield.Tag, questionfield.QuestionDetail
             FROM user.user
             INNER JOIN questionfield.questionfield ON user.UserName = questionfield.Publisher
             WHERE user.UserName = :username";
