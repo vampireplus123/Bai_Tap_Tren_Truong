@@ -1,8 +1,6 @@
 
 <?php 
-// include ('UploadComment.php');
-// include('test.php');
-// include ('LoadQuestion.php');
+include ('UploadComment.php');
 ?>
 <html>
     <head>
@@ -70,11 +68,32 @@
     </header>
     <br>
     <main>
-    <div class="container">
-    </div>
+        <?php 
+            include 'LoadQuestion.php';
+        ?>
+        <div class="container">
+            <?php if ($question_result):?>
+                <div class="card">
+                    <div class="card-header">
+                    <?php
+                        // Split tags string into an array
+                        $tags = explode(',', $question_result['Tag']);
+                        foreach ($tags as $tag): ?>
+                        <span class="badge bg-primary"><?php echo $tag; ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $question_result['QuestionName']; ?></h5>
+                                <div>
+                                    <p class="card-text"><?php echo $question_result['QuestionDetail']; ?></p>
+                                </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            <?php endif; ?>
+        </div>
 </main>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

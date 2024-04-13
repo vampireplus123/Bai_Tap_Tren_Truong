@@ -35,47 +35,47 @@
        // Function to display questions and their comments
         function displayQuestionsWithComments($pdo, $questions) {
             foreach ($questions as $question) {
-                // echo "<div class='card'>";
-                // echo "<div class='card-header'>";
+                echo "<div class='card'>";
+                echo "<div class='card-header'>";
                 // Split tags string into an array
                 $tags = explode(',', $question['Tag']);
-                // foreach ($tags as $tag) {
-                //     echo "<span class='badge bg-primary'>$tag</span>";
-                // }
-                // echo "</div>";
-                // echo "<div class='card-body'>";
-                // echo "<h5 class='card-title'>{$question['QuestionName']}</h5>";
-                // echo "<p class='card-text'>{$question['QuestionDetail']}</p>";
+                foreach ($tags as $tag) {
+                    echo "<span class='badge bg-primary'>$tag</span>";
+                }
+                echo "</div>";
+                echo "<div class='card-body'>";
+                echo "<h5 class='card-title'>{$question['QuestionName']}</h5>";
+                echo "<p class='card-text'>{$question['QuestionDetail']}</p>";
 
                 // Fetch and display comments for this question
                 $comments = getCommentsForQuestion($pdo, $question['ID']);
-                // if ($comments) {
-                //     echo "<div class='comments'>";
-                //     foreach ($comments as $comment) {
-                //         echo "<div class='comment'>";
-                //         echo "<p>{$comment['Content']}</p>";
-                //         echo "</div>";
-                //     }
-                //     echo "</div>";
-                // } else {
-                //     echo "No comments found for this question."; // Display a message if no comments are found
-                // }
+                if ($comments) {
+                    echo "<div class='comments'>";
+                    foreach ($comments as $comment) {
+                        echo "<div class='comment'>";
+                        echo "<p>{$comment['Content']}</p>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                } else {
+                    echo "No comments found for this question."; // Display a message if no comments are found
+                }
 
-                // // Comment Form
-                // echo "<div class='comment-form mt-4'>";
-                // echo "<form action='UploadComment.php' method='POST'>";
-                // echo "<div class='mb-3'>";
-                // echo "<label for='comment' class='form-label'>Your Comment:</label>";
-                // echo "<textarea class='form-control' id='comment' name='comment' rows='3' required></textarea>";
-                // echo "</div>";
-                // // Hidden input field to pass question ID
-                // echo "<input type='hidden' name='question_id' value='{$question['ID']}'>";
-                // echo "<button type='submit' class='btn btn-primary'>Submit Comment</button>";
-                // echo "</form>";
-                // echo "</div>"; // Close comment-form div
+                // Comment Form
+                echo "<div class='comment-form mt-4'>";
+                echo "<form action='UploadComment.php' method='POST'>";
+                echo "<div class='mb-3'>";
+                echo "<label for='comment' class='form-label'>Your Comment:</label>";
+                echo "<textarea class='form-control' id='comment' name='comment' rows='3' required></textarea>";
+                echo "</div>";
+                // Hidden input field to pass question ID
+                echo "<input type='hidden' name='question_id' value='{$question['ID']}'>";
+                echo "<button type='submit' class='btn btn-primary'>Submit Comment</button>";
+                echo "</form>";
+                echo "</div>"; // Close comment-form div
 
-                // echo "</div>"; // Close card-body div
-                // echo "</div>"; // Close card div
+                echo "</div>"; // Close card-body div
+                echo "</div>"; // Close card div
             }
 }
         // Establish connection to the database
