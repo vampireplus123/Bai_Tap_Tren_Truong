@@ -88,11 +88,6 @@ if (!isset($_SESSION['username'])) {
                 <label for="question_detail" class="form-label">Question Detail</label>
                 <textarea class="form-control" id="question_detail" name="question_detail" rows="4" required></textarea>
             </div>
-            <!-- <div class="mb-3">
-                <form action="upload-image.php" method="POST">
-                    </form>
-                    <input type="file" name="escapedImageData" id="image">
-            </div> -->
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

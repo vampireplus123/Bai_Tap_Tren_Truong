@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 09:33 AM
+-- Generation Time: Apr 13, 2024 at 12:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,8 +32,18 @@ CREATE TABLE `questionfield` (
   `QuestionName` text NOT NULL,
   `Tag` text NOT NULL,
   `Publisher` text NOT NULL,
-  `QuestionDetail` text NOT NULL
+  `QuestionDetail` text NOT NULL,
+  `CommentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `questionfield`
+--
+
+INSERT INTO `questionfield` (`ID`, `QuestionName`, `Tag`, `Publisher`, `QuestionDetail`, `CommentID`) VALUES
+(1, 'How can I print in Python', 'IT', 'anh', 'how can I print on python Language', 0),
+(3, 'How can I meet the Professor', 'All', 'huydeptrai', 'I\'m a student at HCM, how can I meet the Professor', 0),
+(4, 'Hi', 'General', 'anh', 'Hi everyone', 0);
 
 --
 -- Indexes for dumped tables
@@ -53,7 +63,7 @@ ALTER TABLE `questionfield`
 -- AUTO_INCREMENT for table `questionfield`
 --
 ALTER TABLE `questionfield`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,53 +1,58 @@
 <?php
-
-$servername = "localhost";
-$username = 'root'; // Replace with your database username
-$password = ''; // Replace with your database password
-$dbname = "questionfield";   // Replace with your database name
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    if (isset($_GET['id'])) {
-        $question_id = $_GET['id'];
-        $question_query = "SELECT * FROM questionfield WHERE ID = :id";
-        $question_statement = $conn->prepare($question_query);
-        $question_statement->bindParam(':id', $question_id);
-        $question_statement->execute();
-        $question_result = $question_statement->fetch(PDO::FETCH_ASSOC);
+// Include the database connection file or define connection details here
+$host = 'localhost';
+$dbname = 'questionfield';
+$username = 'root';
+$password = '';
+// Function to establish a PDO connection
+function connectToDatabase($host, $dbname, $username, $password) {
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    } catch (PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+        return null;
     }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $question_id = $_POST['ID'];
-        $comment_content = $_POST['comment_content'];
-
-        $sql = "INSERT INTO comment (ID, Comment) VALUES (:question_id, :comment_content)";
-        $insert_statement = $conn->prepare($sql);
-        $insert_statement->bindParam(':question_id', $question_id);
-        $insert_statement->bindParam(':comment_content', $comment_content);
-        $insert_statement->execute();
-
-        echo "Comment successfully added.";
-
-        $comment_query = "SELECT Comment FROM comment WHERE ID = :id";
-        $comment_statement = $conn->prepare($comment_query);
-        $comment_statement->bindParam(':question_id', $question_id);
-        $comment_statement->execute();
-
-        $comments = $comment_statement->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($comments) {
-            foreach ($comments as $comment) {
-                echo "Comment: " . $comment["Comment"] . "<br>";
-            }
-        } else {
-            echo "No comments yet.";
-        }
-    }
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
 }
 
-$conn = null; // Close the connection
+// Function to insert a comment into the database
+function insertComment($pdo, $comment, $question_id) {
+    $sql = "INSERT INTO comment (Content, CommentID) VALUES (?, ?)";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$comment, $question_id]);
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the comment and question ID are set
+    if (isset($_POST["comment"]) && isset($_POST["question_id"])) {
+        // Sanitize and validate input data
+        $comment = htmlspecialchars($_POST["comment"]);
+        $question_id = intval($_POST["question_id"]);
+
+        // Establish connection to the database
+        $pdo = connectToDatabase($host, $dbname, $username, $password);
+
+        // If connection is successful, insert the comment
+        if ($pdo) {
+            if (insertComment($pdo, $comment, $question_id)) {
+                // Redirect back to the QuestionPage.php after successful comment insertion
+                header("Location: QuestionPage.php");
+                exit();
+            } else {
+                echo "Error: Failed to insert comment.";
+            }
+
+            // Close connection
+            $pdo = null;
+        } else {
+            echo "Error: Database connection failed.";
+        }
+    } else {
+        echo "Error: Comment or question ID not provided.";
+    }
+} else {
+    echo "Error: Form not submitted.";
+}
 ?>

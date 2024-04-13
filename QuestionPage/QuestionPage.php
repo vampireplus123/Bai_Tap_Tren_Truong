@@ -1,6 +1,8 @@
 
 <?php 
-include ('UploadComment.php');
+// include ('UploadComment.php');
+// include('test.php');
+// include ('LoadQuestion.php');
 ?>
 <html>
     <head>
@@ -68,47 +70,11 @@ include ('UploadComment.php');
     </header>
     <br>
     <main>
-        <?php 
-            include 'LoadQuestion.php';
-        ?>
-        <div class="container">
-            <?php if ($question_result):?>
-                <div class="card">
-                    <div class="card-header">
-                    <?php
-                        // Split tags string into an array
-                        $tags = explode(',', $question_result['Tag']);
-                        foreach ($tags as $tag): ?>
-                        <span class="badge bg-primary"><?php echo $tag; ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $question_result['QuestionName']; ?></h5>
-                                <div>
-                                    <p class="card-text"><?php echo $question_result['QuestionDetail']; ?></p>
-                                </div>
-                    </div>
-                    </div>
-                </div>
-
-                <form action="UploadComment.php" method="POST">
-                <input type="hidden" name="id" value="<?php echo $question_result['ID']; ?>">
-                    <div class="bg-light p-2" id="comment-upload">
-                        <div class="d-flex flex-row align-items-start">
-                            <!-- Move the textarea inside the form -->
-                            <textarea name="comment_content" class="form-control ml-1 shadow-none textarea"></textarea>
-                        </div>
-                        <div class="mt-2 text-right">
-                            <!-- Change the button type to "submit" to submit the form -->
-                            <button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
-                        </div>
-                    </div>
-                </form>
-
-                </div>
-            <?php endif; ?>
-        </div>
+    <div class="container">
+    </div>
 </main>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
