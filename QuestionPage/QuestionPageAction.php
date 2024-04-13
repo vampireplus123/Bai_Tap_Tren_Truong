@@ -35,24 +35,6 @@ function getCommentsForQuestion($pdo, $question_id) {
     $stmt->execute([$question_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-function postCommentForQuestion($pdo, $question_id, $comment_text) {
-    try {
-        // Prepare SQL statement to insert a new comment
-        $sql = "INSERT INTO comment (QuestionID, Content) VALUES (:question_id, :comment_text)";
-        $stmt = $pdo->prepare($sql);
-        
-        // Bind parameters and execute the statement
-        $stmt->bindParam(':question_id', $question_id);
-        $stmt->bindParam(':comment_text', $comment_text);
-        $stmt->execute();
-        
-        return true; // Return true on successful insertion
-    } catch (PDOException $e) {
-        // Handle any potential errors
-        echo "Error: " . $e->getMessage();
-        return false; // Return false if an error occurs
-    }
-}
 
 // Establish connection to the database
 $pdo = connectToDatabase($host, $dbname, $username, $password);

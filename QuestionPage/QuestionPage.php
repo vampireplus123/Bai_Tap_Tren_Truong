@@ -1,6 +1,6 @@
 
 <?php 
-include ('QuestionPageAction.php');
+include ('UploadComment.php');
 ?>
 <html>
     <head>
