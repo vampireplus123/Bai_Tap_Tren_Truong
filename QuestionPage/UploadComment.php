@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($pdo) {
             if (insertComment($pdo, $comment, $question_id)) {
                 // Redirect back to the QuestionPage.php after successful comment insertion
-                header("Location: QuestionPage.php");
+                header("Location: /Home/Home.php");
                 exit();
             } else {
                 echo "Error: Failed to insert comment.";
