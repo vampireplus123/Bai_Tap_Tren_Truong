@@ -125,9 +125,10 @@ include('DisplayProfileAndQuestion.php');
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Tên Câu Hỏi</th>
-                        <th scope="col">Thao Tác</th>
+                        <th scope="col">Number Of Questions</th>
+                        <th scope="col">Question Name</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,6 +145,12 @@ include('DisplayProfileAndQuestion.php');
                                     <button type='submit' name='delete_question' class='btn btn-danger'>Delete</button>
                                 </form>
                             </td>"; // Use a form to delete the question
+                        echo "<td>
+                            <form action='EditQuestion.php' method='post'>
+                                <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
+                                <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
+                            </form>
+                        </td>"; // Use a form to edit the question
                         echo "</tr>";
                         $stt++;
                     }

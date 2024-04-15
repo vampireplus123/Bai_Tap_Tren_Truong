@@ -1,5 +1,6 @@
 
 <?php 
+session_start();
 include ('UploadComment.php');
 ?>
 <html>
@@ -33,7 +34,7 @@ include ('UploadComment.php');
                                 // Kiểm tra xem người dùng đã đăng nhập hay chưa
                                 if (isset($_SESSION['username'])) {
                                     // Nếu đã đăng nhập, hiển thị tên người dùng
-                                    echo '<li><a class="dropdown-item" href="#">' . $_SESSION['username'] . '</a></li>';
+                                    echo '<li><a class="dropdown-item" href="/Profile/ProfilePage.php">' . $_SESSION['username'] . '</a></li>';
                                 } else {
                                     // Nếu chưa đăng nhập, hiển thị chữ "Profile"
                                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
