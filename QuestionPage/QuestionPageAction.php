@@ -4,7 +4,6 @@ $host = 'localhost';
 $dbname = 'questionfield';
 $username = 'root';
 $password = '';        
-
 // Function to establish a PDO connection
 function connectToDatabase($host, $dbname, $username, $password) {
     try {

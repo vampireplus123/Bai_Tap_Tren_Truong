@@ -4,6 +4,7 @@ $host = 'localhost';
 $dbname = 'questionfield';
 $username = 'root';
 $password = '';
+
 // Function to establish a PDO connection
 function connectToDatabase($host, $dbname, $username, $password) {
     try {
@@ -15,6 +16,8 @@ function connectToDatabase($host, $dbname, $username, $password) {
         return null;
     }
 }
+
+// Function to retrieve a question from the database
 function getQuestion($pdo, $question_id) {
     $question_result = null;
     $question_query = "SELECT * FROM questionfield WHERE ID = :id";
@@ -32,12 +35,53 @@ function getCommentsForQuestion($pdo, $question_id) {
     $stmt->execute([$question_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 // Function to insert a comment into the database
 function insertComment($pdo, $comment, $question_id) {
     $sql = "INSERT INTO comment (Content, CommentID) VALUES (?, ?)";
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([$comment, $question_id]);
 }
+
+// Function to handle form submission
+function SubmitForm($pdo) {
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Check if the comment and question ID are set
+        if (isset($_POST["comment"]) && isset($_POST["question_id"])) {
+            // Sanitize and validate input data
+            $comment = htmlspecialchars($_POST["comment"]);
+            $question_id = intval($_POST["question_id"]);
+
+            // Check if the user is logged in
+            if (!isset($_SESSION['username'])) {
+                // If not logged in, redirect to the login page or show a message
+                echo "Bạn phải đăng nhập trước khi comment.";
+                return;
+            }
+
+            // Establish connection to the database
+            // If connection is successful, insert the comment
+            if ($pdo) {
+                if (insertComment($pdo, $comment, $question_id)) {
+                    // Redirect back to the QuestionPage.php after successful comment insertion
+                    header("Location: /Home/Home.php");
+                    exit();
+                } else {
+                    echo "Error: Failed to insert comment.";
+                }
+                // Close connection
+                $pdo = null;
+            } else {
+                echo "Error: Database connection failed.";
+            }
+        } else {
+            echo "Error: Comment or question ID not provided.";
+        }
+    }
+}
+
+session_start();
 $pdo = connectToDatabase($host, $dbname, $username, $password);
 
 if ($pdo && isset($_GET['id'])) {
@@ -46,33 +90,11 @@ if ($pdo && isset($_GET['id'])) {
     $comments = getCommentsForQuestion($pdo, $question_id);
     $pdo = null;
 } else {
-    echo "<p>Invalid request.</p>";
+    echo "<p>dang nhap di suc vat</p>";
 }
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the comment and question ID are set
-    if (isset($_POST["comment"]) && isset($_POST["question_id"])) {
-        // Sanitize and validate input data
-        $comment = htmlspecialchars($_POST["comment"]);
-        $question_id = intval($_POST["question_id"]);
 
-        // Establish connection to the database
-        // If connection is successful, insert the comment
-        if ($pdo) {
-            if (insertComment($pdo, $comment, $question_id)) {
-                // Redirect back to the QuestionPage.php after successful comment insertion
-                header("Location: /Home/Home.php");
-                exit();
-            } else {
-                echo "Error: Failed to insert comment.";
-            }
-            // Close connection
-            $pdo = null;
-        } else {
-            echo "Error: Database connection failed.";
-        }
-    } else {
-        echo "Error: Comment or question ID not provided.";
-    }
+// Call the form submission function only if the user is logged in
+if (isset($_SESSION['username'])) {
+    SubmitForm($pdo);
 }
 ?>
