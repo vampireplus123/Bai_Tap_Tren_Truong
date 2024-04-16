@@ -35,17 +35,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_question'])) {
 
     // Lấy thông tin câu hỏi từ kết quả truy vấn
     $question_name = $question['QuestionName'];
-    // Tương tự, bạn cần lấy các thông tin khác của câu hỏi (nếu có) để hiển thị trong biểu mẫu chỉnh sửa
+    $question_content = $question['QuestionDetail']; // Thêm dòng này để lấy nội dung câu hỏi
 } elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_question'])) {
     // Nếu dữ liệu được gửi từ biểu mẫu cập nhật
-    // Lấy ID và tên câu hỏi từ biểu mẫu
+    // Lấy ID, tên và nội dung của câu hỏi từ biểu mẫu
     $question_id = $_POST['question_id'];
     $question_name = $_POST['question_name'];
+    $question_content = $_POST['QuestionDetail']; // Thêm dòng này để lấy nội dung câu hỏi
 
     // Truy vấn cập nhật câu hỏi trong cơ sở dữ liệu
-    $update_query = "UPDATE questionfield SET QuestionName = :question_name WHERE ID = :question_id";
+    $update_query = "UPDATE questionfield SET QuestionName = :question_name, QuestionDetail = :QuestionDetail WHERE ID = :question_id";
     $update_statement = $pdo->prepare($update_query);
     $update_statement->bindParam(':question_name', $question_name, PDO::PARAM_STR);
+    $update_statement->bindParam(':QuestionDetail', $question_content, PDO::PARAM_STR); // Thêm dòng này để cập nhật nội dung câu hỏi
     $update_statement->bindParam(':question_id', $question_id, PDO::PARAM_INT);
     $update_statement->execute();
 
@@ -54,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_question'])) {
     exit();
 } else {
     // Nếu không có dữ liệu post hoặc không tồn tại ID câu hỏi, chuyển hướng về trang chính
-    header("Location: ProfilePage.php");
+    header("Location: /Home/Home.php");
     exit(); // Dừng việc thực thi kịp thời
 }
 ?>
@@ -74,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_question'])) {
         <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
         <label for="question_name">Question Name:</label><br>
         <input type="text" id="question_name" name="question_name" value="<?php echo $question_name; ?>"><br>
-        <!-- Tương tự, bạn có thể thêm các trường cho các thông tin khác của câu hỏi -->
+        <label for="question_content">Question Content:</label><br> <!-- Thêm trường này để nhập nội dung của câu hỏi -->
+        <textarea id="QuestionDetail" name="QuestionDetail"><?php echo $question_content; ?></textarea><br> <!-- Thêm trường này để nhập nội dung của câu hỏi -->
         <br>
         <input type="submit" name="update_question" value="Save Changes">
     </form>

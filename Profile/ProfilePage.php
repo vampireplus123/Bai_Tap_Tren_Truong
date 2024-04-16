@@ -95,6 +95,11 @@ include('DisplayProfileAndQuestion.php');
                 <img src="image.jpg" class="card-img-top" alt="Image">
                 <div class="card-body">
                     <h5 class="card-title">Profile Image</h5>
+                    <!-- Thêm nút Upload Image -->
+                    <form action="UploadImage.php" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image" id="image">
+                        <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
+                    </form>
                 </div>
             </div>
             <!-- Right Card - Profile Information -->
