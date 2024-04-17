@@ -1,72 +1,72 @@
 <?php
+// Start or resume session
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// Thông tin kết nối đến cơ sở dữ liệu
+
+// Database connection information
 $servername = "localhost";
-$username = 'root'; // Thay đổi thành tên người dùng của bạn
-$password = ''; // Thay đổi thành mật khẩu của bạn
-$dbname = "user"; // Thay đổi thành tên cơ sở dữ liệu của bạn
+$username = 'root'; // Change to your username
+$password = ''; // Change to your password
+$dbname = "user"; // Change to your database name
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Kiểm tra xem người dùng đã gửi file lên chưa
+    // Check if the user has uploaded a file
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
-        // Kiểm tra xem có phiên đăng nhập hay không
+        // Check if there is an active session
         if (isset($_SESSION['username'])) {
-            // Lấy tên người dùng từ phiên đăng nhập
-            $username = $_SESSION['username'];
+            $username = $_SESSION['username']; // Get username from session
 
-            // Đường dẫn thư mục để lưu trữ hình ảnh
+            // Directory path to store images
             $target_dir = "images/";
             $target_file = $target_dir . basename($_FILES["image"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-            // Kiểm tra kích thước của hình ảnh
+            // Check image size
             if ($_FILES["image"]["size"] > 500000) {
-                echo "Hình ảnh quá lớn.";
+                echo "Image is too large.";
                 $uploadOk = 0;
             }
 
-            // Cho phép chỉ một số định dạng hình ảnh cụ thể
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                echo "Chỉ chấp nhận các tệp JPG, JPEG, PNG & GIF.";
+            // Allow only specific image file formats
+            $allowedFormats = array("jpg", "jpeg", "png", "gif");
+            if (!in_array($imageFileType, $allowedFormats)) {
+                echo "Only JPG, JPEG, PNG & GIF files are allowed.";
                 $uploadOk = 0;
             }
 
-            // Kiểm tra nếu $uploadOk không được đặt thành 0 sau tất cả các kiểm tra
-            if ($uploadOk == 0) {
-                echo "Hình ảnh của bạn không được tải lên.";
-            } else {
-                // Di chuyển hình ảnh vào thư mục được chỉ định
+            // Proceed if no errors occurred
+            if ($uploadOk == 1) {
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    echo "Tệp " . htmlspecialchars(basename($_FILES["image"]["name"])) . " đã được tải lên thành công.";
+                    echo "File " . htmlspecialchars(basename($_FILES["image"]["name"])) . " uploaded successfully.";
 
-                    // Lưu đường dẫn vào cơ sở dữ liệu
+                    // Save file path in the database
                     $avatarPath = "images/" . basename($_FILES["image"]["name"]);
 
-                    // Chuẩn bị và thực thi truy vấn để cập nhật đường dẫn hình ảnh trong cơ sở dữ liệu
+                    // Prepare and execute query to update image path in the database
                     $stmt = $conn->prepare("UPDATE user SET Avatar = :avatarPath WHERE UserName = :username");
                     $stmt->bindParam(':avatarPath', $avatarPath);
                     $stmt->bindParam(':username', $username);
                     $stmt->execute();
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    // Set avatar profile path
                     $AvatarProfile = $avatarPath;
                 } else {
-                    echo "Đã xảy ra lỗi khi tải lên hình ảnh.";
+                    echo "Error uploading image.";
                 }
             }
         } else {
-            echo "Bạn phải đăng nhập trước khi tải lên hình ảnh.";
+            echo "You must log in before uploading an image.";
         }
     }
 } catch(PDOException $e) {
-    echo "Lỗi kết nối cơ sở dữ liệu: " . $e->getMessage();
+    echo "Database connection error: " . $e->getMessage();
 }
 
-// Đóng kết nối
+// Close connection
 $conn = null;
 ?>

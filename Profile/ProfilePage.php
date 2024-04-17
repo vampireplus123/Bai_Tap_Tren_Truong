@@ -1,6 +1,7 @@
 <?php
 include('DisplayProfileAndQuestion.php');
-session_start();
+include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
+// session_start();
 ?>
 
 <html>
