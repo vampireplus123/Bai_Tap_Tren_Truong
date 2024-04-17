@@ -1,7 +1,5 @@
 <?php
-include('DisplayProfileAndQuestion.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
-// session_start();
+session_start();
 ?>
 
 <html>
@@ -108,6 +106,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
             <div class="card">
                 <div class="card-body">
                 <?php
+                include('DisplayProfileAndQuestion.php');   
                     // Kiểm tra xem có dữ liệu hồ sơ trong session không
                     if (isset($_SESSION['profile_data']) && !empty($_SESSION['profile_data'])) {
                         $profileData = $_SESSION['profile_data'][0]; // Lấy bản ghi đầu tiên
