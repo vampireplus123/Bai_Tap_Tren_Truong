@@ -1,6 +1,6 @@
 <?php
-session_start();
 include('DisplayProfileAndQuestion.php');
+session_start();
 ?>
 
 <html>
@@ -91,12 +91,23 @@ include('DisplayProfileAndQuestion.php');
     <div class="container">
         <div class="card-container">
             <!-- Left Card - Profile Image -->
+           <!-- Left Card - Profile Image -->
             <div class="card">
-                <img src="image.jpg" class="card-img-top" alt="Image">
+                <?php
+                // include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
+                // Check if user has uploaded an image
+                if (!empty($profileData['Avatar'])) {
+                    // Display uploaded image
+                    echo '<img src="' . $profileData['Avatar'] . '" class="card-img-top" alt="Profile Image">';
+                } else {
+                    // Display default image or a placeholder if no image uploaded
+                    echo '<img src="default.jpg" class="card-img-top" alt="Default Image">';
+                }
+                ?>
                 <div class="card-body">
                     <h5 class="card-title">Profile Image</h5>
-                    <!-- Thêm nút Upload Image -->
-                    <form action="UploadImage.php" method="post" enctype="multipart/form-data">
+                    <!-- Upload form -->
+                    <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
                         <input type="file" name="image" id="image">
                         <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
                     </form>

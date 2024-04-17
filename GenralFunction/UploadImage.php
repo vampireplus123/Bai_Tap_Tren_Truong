@@ -1,10 +1,9 @@
-
-<?php 
+User
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-session_start(); // Bắt đầu phiên
 
 // Thông tin kết nối đến cơ sở dữ liệu
 $servername = "localhost";
@@ -24,7 +23,7 @@ try {
             $username = $_SESSION['username'];
 
             // Đường dẫn thư mục để lưu trữ hình ảnh
-            $target_dir = "images/Avatar/";
+            $target_dir = "images/";
             $target_file = $target_dir . basename($_FILES["image"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -50,7 +49,7 @@ try {
                     echo "Tệp " . htmlspecialchars(basename($_FILES["image"]["name"])) . " đã được tải lên thành công.";
 
                     // Lưu đường dẫn vào cơ sở dữ liệu
-                    $avatarPath = "images/Avatar/" . basename($_FILES["image"]["name"]);
+                    $avatarPath = "images/" . basename($_FILES["image"]["name"]);
 
                     // Chuẩn bị và thực thi truy vấn để cập nhật đường dẫn hình ảnh trong cơ sở dữ liệu
                     $stmt = $conn->prepare("UPDATE user SET Avatar = :avatarPath WHERE UserName = :username");
