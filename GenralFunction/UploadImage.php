@@ -56,6 +56,8 @@ try {
                     $stmt->bindParam(':avatarPath', $avatarPath);
                     $stmt->bindParam(':username', $username);
                     $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $AvatarProfile = $avatarPath;
                 } else {
                     echo "Đã xảy ra lỗi khi tải lên hình ảnh.";
                 }
