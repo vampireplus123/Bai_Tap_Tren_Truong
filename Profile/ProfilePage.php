@@ -93,17 +93,8 @@ session_start();
             <!-- Left Card - Profile Image -->
            <!-- Left Card - Profile Image -->
             <div class="card">
-                <?php
-                // include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
-                // Check if user has uploaded an image
-                if (!empty($AvatarProfile)) {
-                    echo '<img src="' . $AvatarProfile . '" alt="Avatar" style="width: 100px; height: 100px;">';
-                } else {
-                    // Nếu không có avatar, hiển thị một hình ảnh mặc định hoặc thông báo rỗng
-                    echo '<img src="default_avatar.jpg" alt="Default Avatar" style="width: 100px; height: 100px;">';
-                }
-                ?>
                 <div class="card-body">
+                <img src="<?php echo $AvatarProfile; ?>" alt="Avatar" style="width: 100px; height: 100px;">
                     <h5 class="card-title">Profile Image</h5>
                     <!-- Upload form -->
                     <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">

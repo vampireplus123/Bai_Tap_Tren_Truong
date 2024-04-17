@@ -1,10 +1,7 @@
-User
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-
 // Thông tin kết nối đến cơ sở dữ liệu
 $servername = "localhost";
 $username = 'root'; // Thay đổi thành tên người dùng của bạn
