@@ -1,7 +1,10 @@
 <?php
-include('DisplayProfileAndQuestion.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
-// session_start();
+
+// include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
+if (session_status() == PHP_SESSION_NONE) 
+{
+    session_start();
+}
 ?>
 
 <html>
@@ -29,6 +32,16 @@ include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
                 width: 100%;
                 margin-bottom: 20px; /* Thêm margin dưới cho card */
             }
+        }
+        .image-gallery {
+            text-align:center;
+        }
+        .image-gallery img {
+            padding: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            border: 1px solid #FFFFFF;
+            border-radius: 4px;
+            margin: 20px;
         }
     </style>
     </head>
@@ -89,84 +102,94 @@ include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
         </header>
     <main>
         <!-- profile Name-->
-    <div class="container">
-        <div class="card-container">
-            <!-- Left Card - Profile Image -->
-           <!-- Left Card - Profile Image -->
-            <div class="card">
-                <div class="card-body">
-                <img src="<?php echo $AvatarProfile; ?>" alt="Avatar" style="width: 100px; height: 100px;">
-                    <h5 class="card-title">Profile Image</h5>
-                    <!-- Upload form -->
-                    <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
-                        <input type="file" name="image" id="image">
-                        <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
-                    </form> 
+        <div class="container">
+            <div class="card-container">
+                <!-- Left Card - Profile Image -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="image-gallery">
+                            <!-- Profile Image -->
+                            <?php
+                            include('/Bai_Tap_Tren_Truong/GenralFunction/DisplayImage.php');
+                            // Check if $row is set
+                            if(isset($row['Avatar'])) {
+                                echo '<img src='.$Avatar.' style="width: 200px; height: 200px;">';
+                            } else {
+                                echo "Avatar not found.";
+                            }
+                            ?>
+                        </div>
+                        <!-- Upload form -->
+                        <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
+                            <input type="file" name="image" id="image">
+                            <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
+                        </form> 
+                    </div>
                 </div>
-            </div>
-            <!-- Right Card - Profile Information -->
-            <div class="card">
-                <div class="card-body">
-                <?php
-                    // Kiểm tra xem có dữ liệu hồ sơ trong session không
-                    if (isset($_SESSION['profile_data']) && !empty($_SESSION['profile_data'])) {
-                        $profileData = $_SESSION['profile_data'][0]; // Lấy bản ghi đầu tiên
-                        // Hiển thị thông tin hồ sơ từ bản ghi đầu tiên
-                        echo "<h5 class=card-title>$profileData[UserName]</h5>";
-                        // Hiển thị các thông tin khác ở đây
-                    } else {
-                        // Xử lý trường hợp không có dữ liệu hồ sơ trong session
-                        echo "<h1>Profile Data Not Found</h1>";
-                    }
-                ?>
-                    <!-- Chỉ hiển thị biến $profileName một lần -->
-                    <h5 class="card-title"><?php echo $profileName ?></h5>
-                    <p class="card-text">Your Questions: </p>
+                <!-- Right Card - Profile Information -->
+                <div class="card">
+                    <div class="card-body">
+                        <?php
+                        include('DisplayProfileAndQuestion.php');
+                        // Check if there's profile data in session
+                        if (isset($_SESSION['profile_data']) && !empty($_SESSION['profile_data'])) {
+                            $profileData = $_SESSION['profile_data'][0]; // Get the first record
+                            // Display profile information
+                            echo "<h5 class='card-title'>$profileData[UserName]</h5>";
+                            // Display other information here
+                        } else {
+                            // Handle the case where no profile data is found in session
+                            echo "<h1>Profile Data Not Found</h1>";
+                        }
+                        ?>
+                        <!-- Display profile name -->
+                        <h5 class="card-title"><?php echo $profileName ?></h5>
+                        <p class="card-text">Your Questions: </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--Question-->
-    <div class="container">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Number Of Questions</th>
-                        <th scope="col">Question Name</th>
-                        <th scope="col">Delete</th>
-                        <th scope="col">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $stt = 1;
-                    // Loop through your questions and display them
-                    foreach ($result as $question) {
-                        echo "<tr>";
-                        echo "<td>$stt</td>";
-                        echo "<td>" . $question['QuestionName'] . "</td>";
-                        echo "<td>
-                                <form action='DeleteQuestion.php' method='post'>
+        <!--Question-->
+        <div class="container">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Number Of Questions</th>
+                            <th scope="col">Question Name</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        $stt = 1;
+                        // Loop through your questions and display them
+                        foreach ($result as $question) {
+                            echo "<tr>";
+                            echo "<td>$stt</td>";
+                            echo "<td>" . $question['QuestionName'] . "</td>";
+                            echo "<td>
+                                    <form action='DeleteQuestion.php' method='post'>
+                                        <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
+                                        <button type='submit' name='delete_question' class='btn btn-danger'>Delete</button>
+                                    </form>
+                                </td>"; // Use a form to delete the question
+                            echo "<td>
+                                <form action='EditQuestion.php' method='post'>
                                     <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
-                                    <button type='submit' name='delete_question' class='btn btn-danger'>Delete</button>
+                                    <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
                                 </form>
-                            </td>"; // Use a form to delete the question
-                        echo "<td>
-                            <form action='EditQuestion.php' method='post'>
-                                <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
-                                <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
-                            </form>
-                        </td>"; // Use a form to edit the question
-                        echo "</tr>";
-                        $stt++;
-                    }
-                    ?>
+                            </td>"; // Use a form to edit the question
+                            echo "</tr>";
+                            $stt++;
+                        }
+                        ?>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
