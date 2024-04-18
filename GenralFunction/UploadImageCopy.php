@@ -69,10 +69,10 @@ class ImageUploader {
 }
 
 // Retrieve database connection details from the form
-$dbHost = $_POST['dbHost'] ?? 'localhost';
-$dbName = $_POST['dbName'] ?? 'your_database_name';
-$dbUsername = $_POST['dbUsername'] ?? 'your_database_username';
-$dbPassword = $_POST['dbPassword'] ?? 'your_database_password';
+$dbHost = $_POST['dbHost'];
+$dbName = $_POST['dbName']; 
+$dbUsername = $_POST['dbUsername']; 
+$dbPassword = $_POST['dbPassword']; 
 
 // Usage example:
 $uploader = new ImageUploader($_SERVER['DOCUMENT_ROOT'] . "/GenralFunction/images/", 'username', 'Avatar', $dbHost, $dbName, $dbUsername, $dbPassword);
