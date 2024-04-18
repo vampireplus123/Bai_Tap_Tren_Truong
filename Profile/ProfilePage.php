@@ -127,6 +127,7 @@ if (session_status() == PHP_SESSION_NONE)
                             <input type="hidden" name="dbName" id="dbName" value='user'>
                             <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
                             <input type="hidden" name="dbPassword" id="dbPassword" value=''>
+                            <input type="hidden" name="tableName" id="tableName" value='user'>
                             <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
                         </form>
                     </div>

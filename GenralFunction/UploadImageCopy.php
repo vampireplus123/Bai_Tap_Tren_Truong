@@ -20,7 +20,7 @@ class ImageUploader {
         $this->dbPassword = $dbPassword;
     }
 
-    public function uploadImage() {
+    public function uploadImage($tableName) {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
             try {
                 // Connect to the database
@@ -49,7 +49,7 @@ class ImageUploader {
                 // Update database with the image path
                 $avatarPath = "/GenralFunction/images/" . basename($_FILES["image"]["name"]);
                 $username = $_SESSION[$this->usernameField]; // or retrieve username from session
-                $stmt = $conn->prepare("UPDATE user SET $this->avatarField=:avatarPath WHERE $this->usernameField=:username");
+                $stmt = $conn->prepare("UPDATE $tableName SET $this->avatarField=:avatarPath WHERE $this->usernameField=:username");
                 $stmt->bindParam(':avatarPath', $avatarPath);
                 $stmt->bindParam(':username', $username);
                 $stmt->execute();
@@ -68,13 +68,14 @@ class ImageUploader {
     }
 }
 
-// Retrieve database connection details from the form
-$dbHost = $_POST['dbHost'];
-$dbName = $_POST['dbName']; 
-$dbUsername = $_POST['dbUsername']; 
-$dbPassword = $_POST['dbPassword']; 
+// Retrieve form data including the table name
+$dbHost = $_POST['dbHost'] ?? 'localhost';
+$dbName = $_POST['dbName'];
+$dbUsername = $_POST['dbUsername'] ?? 'root';
+$dbPassword = $_POST['dbPassword'] ?? '';
+$tableName = $_POST['tableName'] ?? ''; // assuming you have a field named 'tableName' in your form
 
-// Usage example:
+// Create an instance of ImageUploader and upload the image
 $uploader = new ImageUploader($_SERVER['DOCUMENT_ROOT'] . "/GenralFunction/images/", 'username', 'Avatar', $dbHost, $dbName, $dbUsername, $dbPassword);
-$uploader->uploadImage();
+$uploader->uploadImage($tableName);
 ?>
