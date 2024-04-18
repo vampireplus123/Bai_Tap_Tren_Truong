@@ -120,10 +120,15 @@ if (session_status() == PHP_SESSION_NONE)
                             ?>
                         </div>
                         <!-- Upload form -->
-                        <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
                             <input type="file" name="image" id="image">
+                            <!-- Hidden input fields for database connection details -->
+                            <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
+                            <input type="hidden" name="dbName" id="dbName" value='user'>
+                            <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
+                            <input type="hidden" name="dbPassword" id="dbPassword" value=''>
                             <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
-                        </form> 
+                        </form>
                     </div>
                 </div>
                 <!-- Right Card - Profile Information -->
