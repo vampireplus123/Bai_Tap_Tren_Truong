@@ -15,12 +15,14 @@ function getAvatar($username) {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
+        $avatar = "";
         // Check if there is any result from the query
         if ($stmt->rowCount() > 0) {
             // Fetch the result
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             // Return the avatar image path if exists
-            return $row['Avatar'];
+            $avatar = $row['Avatar'];
+            return $avatar;
         } else {
             // Return error message if avatar not found
             return "Không tìm thấy hình ảnh avatar.";

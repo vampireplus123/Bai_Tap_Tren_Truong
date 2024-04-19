@@ -110,21 +110,32 @@ if (session_status() == PHP_SESSION_NONE)
                         <div class="image-gallery">
                             <!-- Profile Image -->
                             <?php
-                            include('/Bai_Tap_Tren_Truong/GenralFunction/DisplayAvatar.php');
+                            include $_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/DisplayAvatar.php';
                             // Check if $row is set
                             echo '<img src='.$Avatar.' style="width: 200px; height: 200px;">';
                             ?>
                         </div>
                         <!-- Upload form -->
-                        <form id="uploadForm" action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="image" id="image">
-                            <!-- Hidden input fields for database connection details -->
-                            <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
-                            <input type="hidden" name="dbName" id="dbName" value='user'>
-                            <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
-                            <input type="hidden" name="dbPassword" id="dbPassword" value=''>
-                            <input type="hidden" name="tableName" id="tableName" value='user'>
-                            <button type="submit" name="upload_image" class="btn btn-primary">Upload Image</button>
+                        <form action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
+                                <label for="uploadImage" class="btn btn-outline-primary">
+                                    <i class="fas fa-upload"></i> Upload Image
+                                </label>
+                                <input type="file" id="uploadImage" name="image" style="display: none;">
+                                <!-- Hidden input fields for database connection details -->
+                                <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
+                                <input type="hidden" name="dbName" id="dbName" value='user'>
+                                <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
+                                <input type="hidden" name="dbPassword" id="dbPassword" value=''>
+                                <!-- Specify the correct table name -->
+                                <input type="hidden" name="tableName" id="tableName" value='user'>
+                                <!-- Specify the correct avatar field name -->
+                                <input type="hidden" name="avatarField" id="avatarField" value='Avatar'>
+                                <input type="hidden" name="redirectLocation" value="/Profile/ProfilePage.php">
+
+                                <!-- Hidden input fields for condition clause if needed -->
+                                <input type="hidden" name="conditionField" id="conditionField" value='ID'>
+                                <input type="hidden" name="conditionValue" id="conditionValue" value='<?php echo $question_id; ?>'> <!-- Assuming you have $question_id available -->
+                                <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                         </form>
                     </div>
                 </div>

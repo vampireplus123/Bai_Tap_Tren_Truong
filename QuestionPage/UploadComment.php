@@ -65,7 +65,7 @@ function SubmitForm($pdo) {
             if ($pdo) {
                 if (insertComment($pdo, $comment, $question_id)) {
                     // Redirect back to the QuestionPage.php after successful comment insertion
-                    header("Location: /Home/Home.php");
+                    header("Location: QuestionPage.php?id=" . $question_id);
                     exit();
                 } else {
                     echo "Error: Failed to insert comment.";
@@ -80,21 +80,36 @@ function SubmitForm($pdo) {
         }
     }
 }
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
-session_start();
 $pdo = connectToDatabase($host, $dbname, $username, $password);
 
+// Check if the question ID is provided via GET parameter
 if ($pdo && isset($_GET['id'])) {
     $question_id = $_GET['id'];
-    $question = getQuestion($pdo, $question_id);
-    $comments = getCommentsForQuestion($pdo, $question_id);
-    $pdo = null;
+    // Store the question ID in session
+    $_SESSION['last_question_id'] = $question_id;
 } else {
-    echo "<p>dang nhap di suc vat</p>";
+    // If the question ID is not provided via GET parameter and we have a stored last question ID in session
+    if (isset($_SESSION['last_question_id'])) {
+        $question_id = $_SESSION['last_question_id'];
+    } else {
+        // Handle the case when no question ID is provided and no last question ID is stored
+        exit("Error: No question ID provided.");
+    }
 }
+
+// Retrieve the question and comments
+$question = getQuestion($pdo, $question_id);
+$comments = getCommentsForQuestion($pdo, $question_id);
 
 // Call the form submission function only if the user is logged in
 if (isset($_SESSION['username'])) {
     SubmitForm($pdo);
 }
+
+// Close the database connection
+$pdo = null;
 ?>

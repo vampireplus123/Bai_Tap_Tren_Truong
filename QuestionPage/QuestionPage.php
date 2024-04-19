@@ -1,6 +1,16 @@
+<?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    session_start();
+    include $_SERVER['DOCUMENT_ROOT'] . '/Home/Questionfield.php';
 
-<?php 
-include ('UploadComment.php');
+    // Debugging: Output the value of $_GET['id']
+    if(isset($_GET['id'])) {
+        echo "Question ID: " . $_GET['id'];
+        include 'UploadComment.php';
+    } else {
+        echo "No question ID found in URL.";
+    }
 ?>
 <html>
     <head>
@@ -43,11 +53,9 @@ include ('UploadComment.php');
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class = "dropdown-item" href="/register/register.php" class="nav-link">Register</a></li>
                                 <?php
-                                // Kiểm tra xem người dùng đã đăng nhập hay chưa
                                      // Kiểm tra xem người dùng đã đăng nhập hay chưa
                                     if (isset($_SESSION['user_id'])) {
                                         // Nếu đã đăng nhập, hiển thị nút Logout
-                                        // echo '<a href="/Login/Logout.php" class="nav-link">Logout</a>';
                                         echo '<li><a class = "dropdown-item" href="/Login/Logout.php" class="nav-link">Logout</a></li>';
                                     } else {
                                         // Nếu chưa đăng nhập, hiển thị nút Login
@@ -56,7 +64,9 @@ include ('UploadComment.php');
                                 ?>
                             </ul>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/AdminSite/AdminHome.php">Admin Login</a>
+                        </li>
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -69,6 +79,7 @@ include ('UploadComment.php');
     <br>
     <main>  
         <div class="container">
+            
             <?php if ($question):?>
                 <div class="card">
                     <div class="card-header">
@@ -79,6 +90,22 @@ include ('UploadComment.php');
                                     <i class="fas fa-upload"></i> Upload Image
                                 </label>
                                 <input type="file" id="uploadImage" name="image" style="display: none;">
+                                <!-- Hidden input fields for database connection details -->
+                                <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
+                                <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
+                                <input type="hidden" name="dbPassword" id="dbPassword" value=''>
+
+                                <!-- Specify the correct database and table name -->
+                                <input type="hidden" name="dbName" id="dbName" value='questionfield'>
+                                <input type="hidden" name="tableName" id="tableName" value='Image'>
+
+                                <!-- Specify the correct avatar field name -->
+                                <input type="hidden" name="avatarField" id="avatarField" value='ID'>
+                                <input type="hidden" name="redirectLocation" value="/QuestionPage/QuestionPage.php?id=<?php echo $question_id; ?>">
+
+                                <!-- Hidden input fields for condition clause if needed -->
+                                <input type="hidden" name="conditionField" id="conditionField" value='ID'>
+                                <input type="hidden" name="conditionValue" id="conditionValue" value='<?php echo $question_id; ?>'> <!-- Assuming you have $question_id available -->
                                 <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                             </form>
                         </div>
