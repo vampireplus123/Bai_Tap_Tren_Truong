@@ -45,10 +45,9 @@ if(isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 
     // Call the function to get the avatar
-    $avatar = getAvatar($username);
+    $Avatar = getAvatar($username);
 
     // Echo the avatar image path or error message
-    echo $avatar;
 } else {
     // Echo message if user is not logged in
     echo "Vui lòng đăng nhập để xem hình ảnh avatar.";
