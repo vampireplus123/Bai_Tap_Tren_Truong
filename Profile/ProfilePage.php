@@ -110,13 +110,9 @@ if (session_status() == PHP_SESSION_NONE)
                         <div class="image-gallery">
                             <!-- Profile Image -->
                             <?php
-                            include('/Bai_Tap_Tren_Truong/GenralFunction/DisplayImage.php');
+                            include('/Bai_Tap_Tren_Truong/GenralFunction/DisplayAvatar.php');
                             // Check if $row is set
-                            if(isset($row['Avatar'])) {
-                                echo '<img src='.$Avatar.' style="width: 200px; height: 200px;">';
-                            } else {
-                                echo "Avatar not found.";
-                            }
+                            echo '<img src='.$Avatar.' style="width: 200px; height: 200px;">';
                             ?>
                         </div>
                         <!-- Upload form -->
