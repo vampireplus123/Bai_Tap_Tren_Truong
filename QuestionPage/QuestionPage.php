@@ -72,20 +72,24 @@ include ('UploadComment.php');
             <?php if ($question):?>
                 <div class="card">
                     <div class="card-header">
-                    <?php
-                        // Split tags string into an array
-                        $tags = explode(',', $question['Tag']);
-                        foreach ($tags as $tag): ?>
-                        <span class="badge bg-primary"><?php echo $tag; ?></span>
-                        <?php endforeach; ?>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title"><?php echo $question['QuestionName']; ?></h5>
+                            <form action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
+                                <label for="uploadImage" class="btn btn-outline-primary">
+                                    <i class="fas fa-upload"></i> Upload Image
+                                </label>
+                                <input type="file" id="uploadImage" name="image" style="display: none;">
+                                <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $question['QuestionName']; ?></h5>
-                                <div>
-                                    <p class="card-text"><?php echo $question['QuestionDetail']; ?></p>
-                                </div>
+                        <div>
+                            <p class="card-text"><?php echo $question['QuestionDetail']; ?></p>
+                        </div>
                     </div>
                 </div>
+
             <?php endif; ?>
         </div>   
         <?php
