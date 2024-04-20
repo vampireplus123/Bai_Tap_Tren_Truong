@@ -6,7 +6,6 @@
 
     // Debugging: Output the value of $_GET['id']
     if(isset($_GET['id'])) {
-        echo "Question ID: " . $_GET['id'];
         include 'UploadComment.php';
     } else {
         echo "No question ID found in URL.";
@@ -97,10 +96,11 @@
 
                                 <!-- Specify the correct database and table name -->
                                 <input type="hidden" name="dbName" id="dbName" value='questionfield'>
-                                <input type="hidden" name="tableName" id="tableName" value='Image'>
+                                <input type="hidden" name="tableName" id="tableName" value='image'>
 
                                 <!-- Specify the correct avatar field name -->
-                                <input type="hidden" name="avatarField" id="avatarField" value='ID'>
+                                <input type="hidden" name="avatarField" id="avatarField" value='Image'>
+                                <input type="hidden" name="questionId" id="questionId" value='<?php echo $question_id; ?>'>
                                 <input type="hidden" name="redirectLocation" value="/QuestionPage/QuestionPage.php?id=<?php echo $question_id; ?>">
 
                                 <!-- Hidden input fields for condition clause if needed -->
