@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Giả sử bạn muốn sử dụng tên người dùng "Anonymous" làm Publisher
         $publisher = $_SESSION['username']; 
         $questionDetail = $_POST['question_detail'];
-
         // Tạo truy vấn để chèn dữ liệu vào bảng
         $sql = "INSERT INTO questionfield (QuestionName, Tag, Publisher, QuestionDetail)
                 VALUES (:questionName, :tag, :publisher, :questionDetail)";
@@ -39,10 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Thực thi truy vấn
         $stmt->execute();
-
         // Thiết lập thông báo thành công và chuyển hướng người dùng về trang Home.php
         $_SESSION['success_message'] = "Câu hỏi đã được gửi thành công.";
-        header("Location: /Home/Home.php");
+        header("Location: /QuestionPage/QuestionPage.php?questionID=$questionID");
     } catch(PDOException $e) {
         // Xử lý lỗi nếu có
         echo "Error: " . $e->getMessage();
