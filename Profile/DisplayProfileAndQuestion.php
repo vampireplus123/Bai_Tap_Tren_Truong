@@ -1,39 +1,46 @@
 <?php
+// Start session
 
-// Đoạn mã kết nối CSDL và truy vấn dữ liệu
-$servername = "localhost";
+// Database connection parameters
+$host = 'localhost';
+$dbname = 'questionfield';
 $username = 'root';
 $password = '';
-$userDatabase = "user";
-$questionDatabase = "questionfield";
 
+// Attempt to establish a database connection
 try {
-    $userDsn = "mysql:host=$servername;dbname=$userDatabase";
-    $userPdo = new PDO($userDsn, $username, $password);
-    $userPdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $questionDsn = "mysql:host=$servername;dbname=$questionDatabase";
-    $questionPdo = new PDO($questionDsn, $username, $password);
-    $questionPdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $query = "SELECT questionfield.ID, user.UserName, questionfield.QuestionName, questionfield.Tag, questionfield.QuestionDetail
-            FROM user.user
-            INNER JOIN questionfield.questionfield ON user.UserName = questionfield.Publisher
-            WHERE user.UserName = :username";
-
-    $stmt = $userPdo->prepare($query);
-    $stmt->bindParam(':username', $_SESSION['username']);
-    $stmt->execute();
-
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $userPdo = null;
-    $questionPdo = null;
-
-    $profileName = null;
-    $_SESSION['profile_data'] = $result;
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    // Set PDO to throw exceptions on error
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    // Xử lý lỗi
-    echo "Connection failed: " . $e->getMessage();
+    // Handle database connection error
+    die("Database connection failed: " . $e->getMessage());
 }
 
+// Fetch user profile data based on the logged-in user's session
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+    
+    // Prepare and execute query to fetch user profile data
+    $profileQuery = "SELECT * FROM `user` WHERE `ID` = ?";
+    $profileStatement = $pdo->prepare($profileQuery);
+    $profileStatement->execute([$userId]);
+    
+    // Fetch profile data
+    $profileData = $profileStatement->fetch(PDO::FETCH_ASSOC);
+}
+
+// Fetch questions data associated with the logged-in user
+if (isset($userId)) {
+    // Prepare and execute query to fetch questions data for the user
+    $questionsQuery = "SELECT * FROM `questionfield` WHERE `UserID` = ?";
+    $questionsStatement = $pdo->prepare($questionsQuery);
+    $questionsStatement->execute([$userId]);
+    
+    // Fetch questions data
+    $questions = $questionsStatement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Close the database connection (optional, as PHP will automatically close it at the end of script execution)
+// $pdo = null;
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 12:11 PM
+-- Generation Time: Apr 21, 2024 at 08:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,17 +33,16 @@ CREATE TABLE `questionfield` (
   `Tag` text NOT NULL,
   `Publisher` text NOT NULL,
   `QuestionDetail` text NOT NULL,
-  `CommentID` int(11) NOT NULL
+  `UserID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `questionfield`
 --
 
-INSERT INTO `questionfield` (`ID`, `QuestionName`, `Tag`, `Publisher`, `QuestionDetail`, `CommentID`) VALUES
-(1, 'How can I print in Python', 'IT', 'anh', 'how can I print on python Language', 0),
-(3, 'How can I meet the Professor', 'All', 'huydeptrai', 'I\'m a student at HCM, how can I meet the Professor', 0),
-(4, 'Hi', 'General', 'anh', 'Hi everyone', 0);
+INSERT INTO `questionfield` (`ID`, `QuestionName`, `Tag`, `Publisher`, `QuestionDetail`, `UserID`) VALUES
+(15, 'Hi', 'All', 'anh', 'a', 1),
+(16, 'How can I print in Python', 'All', 'anh', 'a', 1);
 
 --
 -- Indexes for dumped tables
@@ -53,7 +52,8 @@ INSERT INTO `questionfield` (`ID`, `QuestionName`, `Tag`, `Publisher`, `Question
 -- Indexes for table `questionfield`
 --
 ALTER TABLE `questionfield`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `UserQuestion` (`UserID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -63,7 +63,17 @@ ALTER TABLE `questionfield`
 -- AUTO_INCREMENT for table `questionfield`
 --
 ALTER TABLE `questionfield`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `questionfield`
+--
+ALTER TABLE `questionfield`
+  ADD CONSTRAINT `UserQuestion` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

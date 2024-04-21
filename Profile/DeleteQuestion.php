@@ -1,56 +1,44 @@
 <?php
+// Start session
+session_start();
 
-$servername = "localhost";
+// Database connection parameters
+$host = 'localhost';
+$dbname = 'questionfield';
 $username = 'root';
 $password = '';
-$database = "questionfield";
 
+// Check if the form is submitted and the question_id is set
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_question']) && isset($_POST['question_id'])) {
+    // Get the question_id from the form submission
+    $questionId = $_POST['question_id'];
 
-    // Create a PDO instance
-$pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-// Set the PDO error mode to exception
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-/// Function to delete a question
-function deleteQuestion($pdo, $questionId) {
+    // Attempt to establish a database connection
     try {
-        // Prepare and execute SQL query to delete the question
-        $query = "DELETE FROM questionfield WHERE ID = ?";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$questionId]);
-        
-        return true; // Return true if deletion is successful
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        // Set PDO to throw exceptions on error
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Prepare a delete query
+        $deleteQuery = "DELETE FROM `questionfield` WHERE `ID` = ?";
+        $statement = $pdo->prepare($deleteQuery);
+
+        // Bind the question_id parameter
+        $statement->bindParam(1, $questionId, PDO::PARAM_INT);
+
+        // Execute the delete query
+        $statement->execute();
+        echo "Received Question ID: " . $questionId;
+        // Redirect back to the profile page after deletion
+        header("Location: ProfilePage.php");
+        exit();
     } catch (PDOException $e) {
-        // Handle the exception (e.g., log the error, display an error message)
-        error_log("Error deleting question: " . $e->getMessage());
-        return false; // Return false if deletion fails
+        // Handle database connection error or query execution error
+        die("Error: " . $e->getMessage());
     }
-}
-function DisplayMessage($message)
-{
-    echo "<script>alert('$message');</script>";
+} else {
+    // Redirect to the profile page if the form is not submitted or question_id is not set
     header("Location: ProfilePage.php");
-}
-
-// Check if the delete button is clicked
-if (isset($_POST['delete_question'])) {
-    // Get the question ID to delete
-    $questionIdToDelete = isset($_POST['question_id']) ? $_POST['question_id'] : null;
-
-    if ($questionIdToDelete !== null) {
-        // Call the deleteQuestion function
-        if (deleteQuestion($pdo, $questionIdToDelete)) {
-            // Set a flag to indicate successful deletion
-            $deleteSuccess = true;
-            DisplayMessage('Done');
-        } else {
-            // Failed to delete the question
-            $deleteSuccess = false;
-            DisplayMessage('Failed');
-        }
-    } else {
-        // Invalid question ID
-        $deleteSuccess = false;
-        DisplayMessage('Invalid Question');
-    }
+    exit();
 }
 ?>

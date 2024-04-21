@@ -6,7 +6,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: /Login/Login.php");
     exit(); // Dừng kịch bản PHP ở đây để tránh tiếp tục chạy mã HTML dưới
 }
-
+echo ($_SESSION['username']);
 // Nếu người dùng đã đăng nhập, hiển thị nội dung của trang đặt câu hỏi
 ?>
 

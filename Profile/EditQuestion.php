@@ -1,84 +1,67 @@
 <?php
-$servername = "localhost";
-$username = 'root';
-$password = '';
-$database = "questionfield";
+// Database configuration
+session_start();
+$servername = "localhost"; // Change this to your database server hostname
+$username = "root"; // Change this to your database username
+$password = ""; // Change this to your database password
+$database = "questionfield"; // Change this to your database name
 
-// Thực hiện kết nối đến cơ sở dữ liệu
+// Create connection
 try {
     $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-    // Thiết lập chế độ lỗi PDO để báo cáo các lỗi
+    // Set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    // Nếu có lỗi khi kết nối đến cơ sở dữ liệu, hiển thị thông báo lỗi
-    echo "Kết nối đến cơ sở dữ liệu thất bại: " . $e->getMessage();
-    exit(); // Dừng việc thực thi kịp thời
+} catch(PDOException $e) {
+    // Display an error message if connection fails
+    echo "Connection failed: " . $e->getMessage();
+    exit(); // Terminate the script
 }
 
-// Kiểm tra xem phương thức là POST và tồn tại dữ liệu câu hỏi
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_question'])) {
-    // Lấy ID của câu hỏi từ biểu mẫu
-    $question_id = $_POST['question_id'];
-
-    // Truy vấn để lấy thông tin về câu hỏi dựa trên ID
-    $query = "SELECT * FROM questionfield WHERE ID = :question_id";
-    $statement = $pdo->prepare($query);
-    $statement->bindParam(':question_id', $question_id, PDO::PARAM_INT);
-    $statement->execute();
-    $question = $statement->fetch(PDO::FETCH_ASSOC);
-
-    // Kiểm tra xem câu hỏi có tồn tại không
-    if (!$question) {
-        echo "Question not found.";
-        exit(); // Dừng việc thực thi nếu không tìm thấy câu hỏi
-    }
-
-    // Lấy thông tin câu hỏi từ kết quả truy vấn
-    $question_name = $question['QuestionName'];
-    $question_content = $question['QuestionDetail']; // Thêm dòng này để lấy nội dung câu hỏi
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_question'])) {
-    // Nếu dữ liệu được gửi từ biểu mẫu cập nhật
-    // Lấy ID, tên và nội dung của câu hỏi từ biểu mẫu
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_question'])) {
+    // Get the question ID and updated details from the form
     $question_id = $_POST['question_id'];
     $question_name = $_POST['question_name'];
-    $question_content = $_POST['QuestionDetail']; // Thêm dòng này để lấy nội dung câu hỏi
+    $question_detail = $_POST['question_detail'];
 
-    // Truy vấn cập nhật câu hỏi trong cơ sở dữ liệu
-    $update_query = "UPDATE questionfield SET QuestionName = :question_name, QuestionDetail = :QuestionDetail WHERE ID = :question_id";
-    $update_statement = $pdo->prepare($update_query);
-    $update_statement->bindParam(':question_name', $question_name, PDO::PARAM_STR);
-    $update_statement->bindParam(':QuestionDetail', $question_content, PDO::PARAM_STR); // Thêm dòng này để cập nhật nội dung câu hỏi
-    $update_statement->bindParam(':question_id', $question_id, PDO::PARAM_INT);
-    $update_statement->execute();
+    try {
+        // Update the question in the database
+        $update_query = "UPDATE questionfield SET QuestionName = :question_name, QuestionDetail = :question_detail WHERE ID = :question_id";
+        $update_statement = $pdo->prepare($update_query);
+        $update_statement->bindParam(':question_name', $question_name, PDO::PARAM_STR);
+        $update_statement->bindParam(':question_detail', $question_detail, PDO::PARAM_STR);
+        $update_statement->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+        $update_statement->execute();
 
-    // Chuyển hướng người dùng về trang chính sau khi cập nhật
-    header("Location: ProfilePage.php");
-    exit();
+        // Redirect to the profile page after updating
+        header("Location: ProfilePage.php");
+        exit();
+    } catch (PDOException $e) {
+        // Handle database errors
+        echo "Error updating question: " . $e->getMessage();
+    }
 } else {
-    // Nếu không có dữ liệu post hoặc không tồn tại ID câu hỏi, chuyển hướng về trang chính
+    // If the form is not submitted, redirect to the home page
     header("Location: /Home/Home.php");
-    exit(); // Dừng việc thực thi kịp thời
+    exit();
 }
 ?>
-
-<!-- Hiển thị biểu mẫu chỉnh sửa câu hỏi -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Question</title>
-    <!-- Thêm các liên kết cần thiết cho giao diện -->
+    <!-- Include any necessary CSS files -->
 </head>
 <body>
     <h2>Edit Question</h2>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+        <input type="hidden" name="question_id" value="<?php echo $_POST['question_id']; ?>">
         <label for="question_name">Question Name:</label><br>
-        <input type="text" id="question_name" name="question_name" value="<?php echo $question_name; ?>"><br>
-        <label for="question_content">Question Content:</label><br> <!-- Thêm trường này để nhập nội dung của câu hỏi -->
-        <textarea id="QuestionDetail" name="QuestionDetail"><?php echo $question_content; ?></textarea><br> <!-- Thêm trường này để nhập nội dung của câu hỏi -->
-        <br>
+        <input type="text" id="question_name" name="question_name" value="<?php echo $_POST['question_name']; ?>"><br>
+        <label for="question_detail">Question Detail:</label><br>
+        <textarea id="question_detail" name="question_detail"><?php echo $_POST['question_detail']; ?></textarea><br>
         <input type="submit" name="update_question" value="Save Changes">
     </form>
 </body>

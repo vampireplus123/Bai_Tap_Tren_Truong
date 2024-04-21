@@ -1,10 +1,16 @@
 <?php
 
 // include($_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/UploadImage.php');
-if (session_status() == PHP_SESSION_NONE) 
-{
-    session_start();
+
+session_start();
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    // If not logged in, redirect to the login page
+    header("Location: /Login/Login.php");
+    exit();
 }
+// Include the script to display profile and questions
+include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
 ?>
 
 <html>
@@ -142,64 +148,64 @@ if (session_status() == PHP_SESSION_NONE)
                 <!-- Right Card - Profile Information -->
                 <div class="card">
                     <div class="card-body">
-                        <?php
-                        include('DisplayProfileAndQuestion.php');
-                        // Check if there's profile data in session
-                        if (isset($_SESSION['profile_data']) && !empty($_SESSION['profile_data'])) {
-                            $profileData = $_SESSION['profile_data'][0]; // Get the first record
-                            // Display profile information
-                            echo "<h5 class='card-title'>$profileData[UserName]</h5>";
-                            // Display other information here
-                        } else {
-                            // Handle the case where no profile data is found in session
-                            echo "<h1>Profile Data Not Found</h1>";
-                        }
-                        ?>
-                        <!-- Display profile name -->
-                        <h5 class="card-title"><?php echo $profileName ?></h5>
-                        <p class="card-text">Your Questions: </p>
+                        <?php if (isset($profileData) && !empty($profileData)): ?>
+                            <!-- Display user profile information -->
+                            <h5 class="card-title"><?php echo $profileData['UserName']; ?></h5>
+                            <!-- Display other profile information here -->
+
+                            <p class="card-text">Your Questions:</p>
+
+                            <!-- Display list of questions -->
+                            <ul>
+                                <?php foreach ($questions as $question): ?>
+                                    <li><?php echo $question['QuestionName']; ?></li>
+                                    <!-- Display other question details here -->
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <!-- Handle the case where no profile data is found -->
+                            <p>No profile data found.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Question-->
+       <!-- User's Question -->
+        <!-- User's Question -->
         <div class="container">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Number Of Questions</th>
-                            <th scope="col">Question Name</th>
-                            <th scope="col">Delete</th>
-                            <th scope="col">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        $stt = 1;
-                        // Loop through your questions and display them
-                        foreach ($result as $question) {
-                            echo "<tr>";
-                            echo "<td>$stt</td>";
-                            echo "<td><a href='/QuestionPage/QuestionPage.php?question_id=" . $question['ID'] . "'>" . $question['QuestionName'] . "</a></td>";
-                            echo "<td>
-                                    <form action='DeleteQuestion.php' method='post'>
-                                        <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
-                                        <button type='submit' name='delete_question' class='btn btn-danger'>Delete</button>
-                                    </form>
-                                </td>"; // Use a form to delete the question
-                            echo "<td>
-                                    <form action='EditQuestion.php' method='post'>
-                                        <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
-                                        <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
-                                    </form>
-                                </td>"; // Use a form to edit the question
-                            echo "</tr>";
-                            $stt++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Your Questions</h5>
+                    <?php if (isset($questions) && !empty($questions)): ?>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Number of Question</th>
+                                    <th>Question Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($questions as $index => $question): ?>
+                                    <tr>
+                                        <td><?php echo $index + 1; ?></td>
+                                        <td><?php echo $question['QuestionName']; ?></td>
+                                        <td>
+                                            <!-- Form to delete the question -->
+                                            <form action="DeleteQuestion.php" method="post">
+                                                <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
+                                                <button type="submit" name = "delete_question"class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <!-- Display other question details here if needed -->
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No questions found.</p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </main>
