@@ -10,6 +10,8 @@
     } else {
         echo "No question ID found in URL.";
     }
+    echo $_SESSION["user_id"]
+    // echo $_GET['user_id'];
 ?>
 <html>
     <head>
@@ -101,6 +103,10 @@
                                 <!-- Specify the correct avatar field name -->
                                 <input type="hidden" name="avatarField" id="avatarField" value='Image'>
                                 <input type="hidden" name="questionId" id="questionId" value='<?php echo $question_id; ?>'>
+
+                                <!-- Pass the session user ID -->
+                                <input type="hidden" name="userId" id="userId" value='<?php echo $_SESSION["user_id"]; ?>'>
+
                                 <input type="hidden" name="redirectLocation" value="/QuestionPage/QuestionPage.php?id=<?php echo $question_id; ?>">
 
                                 <!-- Hidden input fields for condition clause if needed -->
@@ -108,6 +114,7 @@
                                 <input type="hidden" name="conditionValue" id="conditionValue" value='<?php echo $question_id; ?>'> <!-- Assuming you have $question_id available -->
                                 <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                             </form>
+
                         </div>
                     </div>
                     <div class="card-body">
