@@ -106,7 +106,7 @@ class ImageUploader {
     
             // Check if the result is valid
             if ($result) {
-                $questionOwner = $result['Publisher'];
+                $questionOwner = $result['UserName'];
     
                 // Check if the session user ID matches the owner of the question
                 if ($questionOwner === $sessionUserId) {
