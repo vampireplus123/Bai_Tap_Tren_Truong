@@ -5,7 +5,7 @@
     include $_SERVER['DOCUMENT_ROOT'] . '/Home/Questionfield.php';
 
     // Debugging: Output the value of $_GET['id']
-    if(isset($_GET['id'])) {
+    if(isset($_GET['id']) or isset($_GET['question_id'])) {
         include 'UploadComment.php';
     } else {
         echo "No question ID found in URL.";

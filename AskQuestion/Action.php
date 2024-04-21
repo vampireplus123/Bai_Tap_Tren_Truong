@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         // Thiết lập thông báo thành công và chuyển hướng người dùng về trang Home.php
         $_SESSION['success_message'] = "Câu hỏi đã được gửi thành công.";
-        header("Location: /QuestionPage/QuestionPage.php?questionID=$questionID");
+        header("Location: /Profile/ProfilePage.php");
     } catch(PDOException $e) {
         // Xử lý lỗi nếu có
         echo "Error: " . $e->getMessage();

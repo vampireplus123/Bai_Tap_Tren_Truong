@@ -116,7 +116,7 @@ if (session_status() == PHP_SESSION_NONE)
                             ?>
                         </div>
                         <!-- Upload form -->
-                        <form action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
+                        <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
                                 <label for="uploadImage" class="btn btn-outline-primary">
                                     <i class="fas fa-upload"></i> Upload Image
                                 </label>
@@ -181,7 +181,7 @@ if (session_status() == PHP_SESSION_NONE)
                         foreach ($result as $question) {
                             echo "<tr>";
                             echo "<td>$stt</td>";
-                            echo "<td>" . $question['QuestionName'] . "</td>";
+                            echo "<td><a href='/QuestionPage/QuestionPage.php?question_id=" . $question['ID'] . "'>" . $question['QuestionName'] . "</a></td>";
                             echo "<td>
                                     <form action='DeleteQuestion.php' method='post'>
                                         <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
@@ -189,16 +189,15 @@ if (session_status() == PHP_SESSION_NONE)
                                     </form>
                                 </td>"; // Use a form to delete the question
                             echo "<td>
-                                <form action='EditQuestion.php' method='post'>
-                                    <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
-                                    <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
-                                </form>
-                            </td>"; // Use a form to edit the question
+                                    <form action='EditQuestion.php' method='post'>
+                                        <input type='hidden' name='question_id' value='" . $question['ID'] . "'>
+                                        <button type='submit' name='edit_question' class='btn btn-primary'>Edit</button>
+                                    </form>
+                                </td>"; // Use a form to edit the question
                             echo "</tr>";
                             $stt++;
                         }
                         ?>
-
                     </tbody>
                 </table>
             </div>
