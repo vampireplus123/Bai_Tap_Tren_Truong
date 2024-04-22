@@ -198,7 +198,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                                             </form>
                                             <form action="EditQuestion.php" method="post">
                                                 <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
-                                                <button type="submit" name = "delete_question"class="btn btn-danger">Delete</button>
+                                                <button type="submit" name = "update_question"class="btn btn-danger">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
