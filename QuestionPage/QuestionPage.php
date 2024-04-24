@@ -86,7 +86,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title"><?php echo $question['QuestionName']; ?></h5>
-                            <form action="/GenralFunction/UploadImageCopy.php" method="post" enctype="multipart/form-data">
+                            <form action="/GenralFunction/UploadScreenShort.php" method="post" enctype="multipart/form-data">
                                 <label for="uploadImage" class="btn btn-outline-primary">
                                     <i class="fas fa-upload"></i> Upload Image
                                 </label>

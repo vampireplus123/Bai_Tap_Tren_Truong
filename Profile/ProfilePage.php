@@ -122,7 +122,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                             ?>
                         </div>
                         <!-- Upload form -->
-                        <form action="/GenralFunction/UploadImage.php" method="post" enctype="multipart/form-data">
+                        <form action="/GenralFunction/UploadAvatar.php" method="post" enctype="multipart/form-data">
                                 <label for="uploadImage" class="btn btn-outline-primary">
                                     <i class="fas fa-upload"></i> Upload Image
                                 </label>
