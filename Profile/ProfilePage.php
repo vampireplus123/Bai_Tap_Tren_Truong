@@ -196,6 +196,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                                                 <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
                                                 <button type="submit" name = "delete_question"class="btn btn-danger">Delete</button>
                                             </form>
+                                            <form action="EditQuestion.php" method="post">
+                                                <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
+                                                <button type="submit" name = "update_question"class="btn btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     <!-- Display other question details here if needed -->
