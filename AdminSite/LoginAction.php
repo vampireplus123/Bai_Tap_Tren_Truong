@@ -1,60 +1,69 @@
 <?php
+// Database connection parameters
+$servername = "localhost";
+$username = "root"; // Replace with your database username
+$password = ""; // Replace with your database password
+$dbname = "questionfield"; // Replace with your database name
+
+// Start session
 session_start();
 
-// Database connection parameters
-$servername = "localhost"; // Change this to your database server name
-$username = "root"; // Change this to your database username
-$password = ""; // Change this to your database password
-$database = "questionfield"; // Change this to your database name
+try {
+    // Create a PDO connection
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    
+    // Set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    // Handle database connection errors
+    echo "Connection failed: " . $e->getMessage();
+    exit(); // Stop execution if connection fails
+}
 
-// Check if the form is submitted
+// Handle login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve username and password from the form
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     try {
-        // Create a PDO connection
-        $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-        
-        // Set the PDO error mode to exception
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        // SQL query to select the admin with the provided username
-        $sql = "SELECT * FROM admin WHERE UserName = :username";
-        
-        // Prepare the SQL statement
-        $stmt = $pdo->prepare($sql);
-        
-        // Bind parameters
+        // Prepare SQL statement to select admin with provided username and password
+        $stmt = $conn->prepare("SELECT ID FROM admin WHERE UserName = :username AND Password = :password");
         $stmt->bindParam(':username', $username);
-        
-        // Execute the SQL statement
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
-        
-        // Fetch the admin with the provided username
-        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Check if an admin with the provided username exists and if the password matches
-        if ($admin && password_verify($password, $admin['Password'])) {
-            // Set session variables
-            $_SESSION['admin_logged_in'] = true;
+
+       // If authentication is successful
+        if ($stmt->rowCount() > 0) {
+            // Authentication successful, get admin ID from the query result
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $admin_id = $row['ID'];
+                    
+            // Store admin ID and username in session
+            $_SESSION['admin_id'] = $admin_id;
+            $_SESSION['admin_username'] = $username;
             
-            // Redirect to a page after successful login
+            // Set admin_logged_in to true
+            $_SESSION['admin_logged_in'] = true;
+
+            // Redirect to the admin home page after successful login
             header("Location: AdminHome.php");
             exit();
         } else {
-            // Redirect back to the login page with an error message
+            // Authentication failed, display error message or redirect to login page again
             $_SESSION['login_error'] = "Invalid username or password";
-            echo"Fail";
+            header("Location: AdminLoginPage.php");
             exit();
         }
+
     } catch(PDOException $e) {
-        // Handle database connection errors
-        $_SESSION['login_error'] = "Database connection failed: " . $e->getMessage();
-        // header("Location: /login.php");
-        echo"Fail";
+        // Handle database errors
+        $_SESSION['login_error'] = "Database error: " . $e->getMessage();
+        header("Location: AdminLoginPage.php");
         exit();
     }
 }
+
+// Close the database connection
+$conn = null;
 ?>
