@@ -36,9 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $stmt->execute();
 
+        // Get the ID of the inserted question
+        $questionId = $conn->lastInsertId();
+        echo $questionId;
         // Set success message and redirect
-        $_SESSION['success_message'] = "Question submitted successfully.";
-        header("Location: /Profile/ProfilePage.php");
+        $_SESSION['success_message'] = "Question submitted successfully. Question ID: $questionId";
+        header("Location: /QuestionPage/QuestionPage.php?id=".$questionId);
         exit();
     } catch(PDOException $e) {
         // Display error message

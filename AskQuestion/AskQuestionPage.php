@@ -76,6 +76,9 @@ echo ($_SESSION['username']);
         <div class="container mt-4">
         <h2>Ask a Question</h2>
         <form action="Action.php" method="POST">
+            <!-- Hidden input field to store question ID -->
+
+            
             <div class="mb-3">
                 <label for="question_name" class="form-label">Question Name</label>
                 <input type="text" class="form-control" id="question_name" name="question_name" required>
@@ -90,6 +93,7 @@ echo ($_SESSION['username']);
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
     </div>
         </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
