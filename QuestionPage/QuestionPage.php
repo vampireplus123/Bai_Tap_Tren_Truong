@@ -110,8 +110,6 @@
                                 <input type="hidden" name="redirectLocation" value="/QuestionPage/QuestionPage.php?id=<?php echo $question_id; ?>">
 
                                 <!-- Hidden input fields for condition clause if needed -->
-                                <input type="hidden" name="conditionField" id="conditionField" value='ID'>
-                                <input type="hidden" name="conditionValue" id="conditionValue" value='<?php echo $question_id; ?>'> <!-- Assuming you have $question_id available -->
                                 <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                             </form>
 
