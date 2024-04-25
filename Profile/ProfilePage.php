@@ -52,60 +52,61 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
     </style>
     </head>
     <body>
-        <header>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/Home/Home.php">Greenwich Of University</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarScroll">
-                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/Home/Home.php">Home</a>
-                            </li>
-                            <li class="nav-item  dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        account_circle
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/Home/Home.php">Greenwich Of University</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Home/Home.php">Home</a>
+                        </li>
+                        <li class="nav-item  dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    account_circle
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                            <?php
+                                // Kiểm tra xem người dùng đã đăng nhập hay chưa
+                                if (isset($_SESSION['username'])) {
+                                    // Nếu đã đăng nhập, hiển thị tên người dùng
+                                    echo '<li><a class="dropdown-item" href="/Profile/ProfilePage.php">' . $_SESSION['username'] . '</a></li>';
+                                } else {
+                                    // Nếu chưa đăng nhập, hiển thị chữ "Profile"
+                                    echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
+                                }
+                            ?>
+                                <li><a class="dropdown-item" href="/Message/Message.php">Send Messenger to Admin</a></li>
+                                <li><hr class="dropdown-divider"></li>
                                 <?php
-                                    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-                                    if (isset($_SESSION['username'])) {
-                                        // Nếu đã đăng nhập, hiển thị tên người dùng
-                                        echo '<li><a class="dropdown-item" href="/Profile/ProfilePage.php">' . $_SESSION['username'] . '</a></li>';
+                                     // Kiểm tra xem người dùng đã đăng nhập hay chưa
+                                    if (isset($_SESSION['user_id'])) {
+                                        // Nếu đã đăng nhập, hiển thị nút Logout
+                                        echo '<li><a class = "dropdown-item" href="/Login/Logout.php" class="nav-link">Logout</a></li>';
                                     } else {
-                                        // Nếu chưa đăng nhập, hiển thị chữ "Profile"
-                                        echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
+                                        // Nếu chưa đăng nhập, hiển thị nút Login
+                                        echo '<li><a class = "dropdown-item" href="/Login/Login.php" class="nav-link">Login</a></li>';
                                     }
                                 ?>
-                                    <li><a class="dropdown-item" href="#">Send Messenger to Admin</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class = "dropdown-item" href="#" class="nav-link">Register</a></li>
-                                    <?php
-                                        // Kiểm tra xem người dùng đã đăng nhập hay chưa
-                                        if (isset($_SESSION['user_id'])) {
-                                            // Nếu đã đăng nhập, hiển thị nút Logout
-                                            echo '<li><a class = "dropdown-item" href="/Login/Logout.php" class="nav-link">Logout</a></li>';
-                                        } else {
-                                            // Nếu chưa đăng nhập, hiển thị nút Login
-                                            echo '<li><a class = "dropdown-item" href="/Login/Login.php" class="nav-link">Login</a></li>';
-                                        }
-                                    ?>
-                                </ul>
-                            </li>
-
-                        </ul>
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/AdminSite/AdminHome.php">Admin Login</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
     <main>
         <!-- profile Name-->
         <div class="container">
@@ -170,8 +171,35 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                 </div>
             </div>
         </div>
-       <!-- User's Question -->
-        <!-- User's Question -->
+    <!-- Modal for updating question -->
+    <div class="modal fade" id="updateQuestionModal" tabindex="-1" aria-labelledby="updateQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateQuestionModalLabel">Update Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateQuestionForm" action="EditQuestion.php" method="post">
+                        <input type="hidden" name="question_id" id="questionIdField">
+                        <div class="mb-3">
+                            <label for="updatedQuestion" class="form-label">Updated Question Title</label>
+                            <input type="text" class="form-control" id="updatedQuestion" name="question_name">
+                        </div>
+                        <!-- New input field for the detail -->
+                        <div class="mb-3">
+                            <label for="updatedDetail" class="form-label">Updated Details</label>
+                            <textarea class="form-control" id="updatedDetail" name="question_detail" rows="3"></textarea>
+                        </div>
+                        <button type="submit" name="update_question" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- User's Question -->
         <div class="container">
             <div class="card">
                 <div class="card-body">
@@ -182,6 +210,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                                 <tr>
                                     <th>Number of Question</th>
                                     <th>Question Name</th>
+                                    <th>Question Details</th>
                                     <th>Delete</th>
                                     <th>Update</th>
                                 </tr>
@@ -191,21 +220,19 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                                     <tr>
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo $question['QuestionName']; ?></td>
+                                        <td><?php echo $question['QuestionDetail']; ?></td>
                                         <td>
                                             <!-- Form to delete the question -->
                                             <form action="DeleteQuestion.php" method="post">
                                                 <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
-                                                <button type="submit" name = "delete_question"class="btn btn-danger">Delete</button>
+                                                <button type="submit" name="delete_question" class="btn btn-danger">Delete</button>
                                             </form>
                                         </td>
                                         <td>
-                                        <form action="EditQuestion.php" method="post">
-                                                <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
-                                                <button type="submit" name = "update_question"class="btn btn-danger">Update</button>
-                                            </form>
+                                            <!-- Button to open the update modal -->
+                                            <button class="btn btn-primary" onclick="openUpdateModal(<?php echo $question['ID']; ?>, '<?php echo $question['QuestionName']; ?>', '<?php echo $question['QuestionDetail']; ?>')">Update</button>
                                         </td>
                                     </tr>
-                                    <!-- Display other question details here if needed -->
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -215,6 +242,55 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                 </div>
             </div>
         </div>
+    <!--Notifications Card -->
+       <?php 
+        include('DisplayMessage.php')
+        ?> 
+   <!-- Table to display notifications -->
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Notifications</h5>
+                    <?php if (isset($notifications) && !empty($notifications)): ?>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Content</th>
+                                    <th>Reply</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($notifications as $notification): ?>
+                                    <tr>
+                                        <td><?php echo $notification['Title']; ?></td>
+                                        <td><?php echo $notification['Detail']; ?></td>
+                                        <td><?php echo $notification['Reply']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No notifications found.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
     </main>
+   <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // Function to set the question ID and display the modal
+        function openUpdateModal(questionId, currentQuestion, currentDetail) {
+            document.getElementById('questionIdField').value = questionId;
+            document.getElementById('updatedQuestion').value = currentQuestion;
+            document.getElementById('updatedDetail').value = currentDetail; // Populate the detail field
+            $('#updateQuestionModal').modal('show'); // Show the modal
+        }
+    </script>
 </body>
+</html>

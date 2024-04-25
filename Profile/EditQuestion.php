@@ -46,23 +46,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_question'])) {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Question</title>
-    <!-- Include any necessary CSS files -->
-</head>
-<body>
-    <h2>Edit Question</h2>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <input type="hidden" name="question_id" value="<?php echo $_POST['question_id']; ?>">
-        <label for="question_name">Question Name:</label><br>
-        <input type="text" id="question_name" name="question_name" value="<?php echo $_POST['question_name']; ?>"><br>
-        <label for="question_detail">Question Detail:</label><br>
-        <textarea id="question_detail" name="question_detail"><?php echo $_POST['question_detail']; ?></textarea><br>
-        <input type="submit" name="update_question" value="Save Changes">
-    </form>
-</body>
-</html>

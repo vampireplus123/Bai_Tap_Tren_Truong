@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Home/Home.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/Home/Home.php">Home</a>
                         </li>
                         <li class="nav-item  dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +50,7 @@
                                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                                 }
                             ?>
-                                <li><a class="dropdown-item" href="#">Send Messenger to Admin</a></li>
+                                <li><a class="dropdown-item" href="/Message/Message.php">Send Messenger to Admin</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <?php
                                      // Kiểm tra xem người dùng đã đăng nhập hay chưa
