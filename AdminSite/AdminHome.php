@@ -16,7 +16,7 @@
                 <?php
                 session_start();
                 if(isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-                    echo '<a href="/logout.php" class="btn btn-danger">Logout</a>';
+                    echo '<a href="Logout.php" class="btn btn-danger">Logout</a>';
                 } else {
                     echo '<a href="AdminLoginPage.php" class="btn btn-primary">Login</a>';
                 }
