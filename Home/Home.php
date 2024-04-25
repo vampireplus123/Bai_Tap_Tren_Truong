@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="/Css/Home.css">
     </head>
     <body>
-      <header>
+    <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="Home.php">Greenwich Of University</a>
@@ -38,9 +38,8 @@
                                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                                 }
                             ?>
-                                <li><a class="dropdown-item" href="#">Send Messenger to Admin</a></li>
+                                <li><a class="dropdown-item" href="/Message/Message.php">Send Messenger to Admin</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class = "dropdown-item" href="/register/register.php" class="nav-link">Register</a></li>
                                 <?php
                                      // Kiểm tra xem người dùng đã đăng nhập hay chưa
                                     if (isset($_SESSION['user_id'])) {

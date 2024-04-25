@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php 
+session_start();
+?>
 <html>
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -9,12 +12,20 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="AdminLoginPage.php">Greenwich Of University</a>
+                <a class="navbar-brand" href="AdminHome.php">Greenwich Of University</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- Notification bell icon with badge -->
+                <div class="position-relative">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">Notification</span>
+                    </a>
+                </div>
+
                 <?php
-                session_start();
                 if(isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
                     echo '<a href="Logout.php" class="btn btn-danger">Logout</a>';
                 } else {
@@ -24,6 +35,7 @@
             </div>
         </nav>
     </header>
+
     <main>
         <div class="container mt-4">
             <div class="row">
