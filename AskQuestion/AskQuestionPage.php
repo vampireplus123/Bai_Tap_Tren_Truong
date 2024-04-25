@@ -49,7 +49,6 @@ echo ($_SESSION['username']);
                             ?>
                                 <li><a class="dropdown-item" href="#">Send Messenger to Admin </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class = "dropdown-item" href="/register/register.php" class="nav-link">Register</a></li>
                                 <?php
                                      // Kiểm tra xem người dùng đã đăng nhập hay chưa
                                     if (isset($_SESSION['user_id'])) {
