@@ -52,46 +52,63 @@
     </main>
     
     <?php
-    // Check if the form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Validate form data (you can add more validation as needed)
+        session_start(); // Start the session if it hasn't been started already
 
-        // Retrieve form data
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        // Check if the form is submitted
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Validate form data (you can add more validation as needed)
 
-        // Database connection
-        $dsn = "mysql:host=localhost;dbname=questionfield";
-        $db_username = "root";
-        $db_password = "";
+            // Retrieve form data
+            $username = $_POST['username'];
+            $password = $_POST['password'];
 
-        try {
-            $pdo = new PDO($dsn, $db_username, $db_password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // Database connection
+            $dsn = "mysql:host=localhost;dbname=questionfield";
+            $db_username = "root";
+            $db_password = "";
 
-            // Prepare an SQL statement to insert a new user
-            $sql = "INSERT INTO `user` (`UserName`, `Password`) VALUES (:username, :password)";
-            $stmt = $pdo->prepare($sql);
+            try {
+                $pdo = new PDO($dsn, $db_username, $db_password);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Bind parameters
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':password', $password);
+                // Check if the username already exists
+                $check_sql = "SELECT COUNT(*) as count FROM `user` WHERE `UserName` = :username";
+                $check_stmt = $pdo->prepare($check_sql);
+                $check_stmt->bindParam(':username', $username);
+                $check_stmt->execute();
+                $row = $check_stmt->fetch(PDO::FETCH_ASSOC);
+                $user_count = $row['count'];
 
-            // Execute the statement
-            $stmt->execute();
+                if ($user_count > 0) {
+                    // JavaScript alert box to inform the user
+                    echo '<script>alert("User with this username already exists.");</script>';
+                    // You can redirect or display an error message as needed
+                } else {
+                    // Prepare an SQL statement to insert a new user
+                    $sql = "INSERT INTO `user` (`UserName`, `Password`) VALUES (:username, :password)";
+                    $stmt = $pdo->prepare($sql);
 
-            // Redirect back to the page where users are listed
-            header("Location: AdminHome.php");
-            exit();
-        } catch (PDOException $e) {
-            // Handle database errors
-            echo "Error: " . $e->getMessage();
+                    // Bind parameters
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':password', $password);
+
+                    // Execute the statement
+                    $stmt->execute();
+
+                    // Redirect back to the page where users are listed
+                    header("Location: AdminHome.php");
+                    exit();
+                }
+            } catch (PDOException $e) {
+                // Handle database errors
+                echo "Error: " . $e->getMessage();
+            }
+
+            // Close connection
+            unset($pdo);
         }
-
-        // Close connection
-        unset($pdo);
-    }
     ?>
+
 
 </body>
 </html>

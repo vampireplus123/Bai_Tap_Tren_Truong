@@ -85,7 +85,7 @@ if (!isset($_SESSION['username'])) {
                 <input type="text" class="form-control" id="question_name" name="question_name" required>
             </div>
             <div class="mb-3">
-                <label for="tag" class="form-label">Tag</label>
+                <label for="tag" class="form-label">Modules</label>
                 <select class="form-select" id="tag" name="tag" required>
                     <?php foreach ($existingTags as $tag): ?>
                         <option value="<?php echo $tag; ?>"><?php echo $tag; ?></option>
