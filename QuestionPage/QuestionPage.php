@@ -120,7 +120,7 @@
                             if(isset($questionImages) && !empty($questionImages)) {
                                 // Loop through each image and display it
                                 foreach($questionImages as $image) {
-                                    echo '<img src="'.$image.'" style="width: 200px; height: 200px;">';
+                                    echo '<img src="'.$image.'" style="width: 350px; height: 250px;">';
                                 }
                             }
                         ?>
