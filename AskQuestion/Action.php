@@ -8,8 +8,17 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
+// Predefined list of tags
+$existingTags = ["General", "IT", "Bussiness", "Marketing", "Event"];
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the submitted tag is valid
+    if (!in_array($_POST['tag'], $existingTags)) {
+        $_SESSION['error_message'] = "Invalid tag. Please select a valid tag from the list.";
+        header("Location: /.php"); // Replace with the page containing your form
+        exit();
+    }
+
     // Database connection parameters
     $servername = "localhost";
     $username = 'root'; // Replace with your database username
@@ -38,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Get the ID of the inserted question
         $questionId = $conn->lastInsertId();
-        echo $questionId;
+
         // Set success message and redirect
         $_SESSION['success_message'] = "Question submitted successfully. Question ID: $questionId";
         header("Location: /QuestionPage/QuestionPage.php?id=".$questionId);

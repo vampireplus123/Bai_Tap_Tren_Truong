@@ -10,8 +10,6 @@
     } else {
         echo "No question ID found in URL.";
     }
-    echo $_SESSION["user_id"]
-    // echo $_GET['user_id'];
 ?>
 <html>
     <head>
