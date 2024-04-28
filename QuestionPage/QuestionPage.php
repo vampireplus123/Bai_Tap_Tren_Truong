@@ -88,12 +88,7 @@
                                 <label for="uploadImage" class="btn btn-outline-primary">
                                     <i class="fas fa-upload"></i> Upload Image
                                 </label>
-                                <input type="file" id="uploadImage" name="image" style="display: none;">
-                                <!-- Hidden input fields for database connection details -->
-                                <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
-                                <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
-                                <input type="hidden" name="dbPassword" id="dbPassword" value=''>
-
+                                <input type="file" id="uploadImage" name="image" style="display: none;">          
                                 <!-- Specify the correct database and table name -->
                                 <input type="hidden" name="dbName" id="dbName" value='questionfield'>
                                 <input type="hidden" name="tableName" id="tableName" value='image'>
