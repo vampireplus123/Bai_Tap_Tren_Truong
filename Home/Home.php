@@ -72,10 +72,6 @@ if (isset($_GET['tagFilter'])) {
                                 <a class="nav-link active" aria-current="page" href="/AdminSite/AdminHome.php">Admin Login</a>
                             </li>
                         </ul>
-                        <form class="d-flex" role="search" method="GET" action="Home.php">
-                            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
                     </div>
                 </div>
             </nav>

@@ -99,10 +99,6 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                             <a class="nav-link active" aria-current="page" href="/AdminSite/AdminHome.php">Admin Login</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -200,48 +196,49 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
 
 
     <!-- User's Question -->
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Your Questions</h5>
-                    <?php if (isset($questions) && !empty($questions)): ?>
-                        <table class="table">
-                            <thead>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Your Questions</h5>
+                <?php if (isset($questions) && !empty($questions)): ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Number of Question</th>
+                                <th>Question Name</th>
+                                <th>Question Details</th>
+                                <th>Delete</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($questions as $index => $question): ?>
                                 <tr>
-                                    <th>Number of Question</th>
-                                    <th>Question Name</th>
-                                    <th>Question Details</th>
-                                    <th>Delete</th>
-                                    <th>Update</th>
+                                    <td><?php echo $index + 1; ?></td>
+                                    <td><a href="/QuestionPage/QuestionPage.php?id=<?php echo $question['ID']; ?>" class="link"><?php echo $question['QuestionName']; ?></a></td> <!-- Link to the separate question page -->
+                                    <td><?php echo $question['QuestionDetail']; ?></td>
+                                    <td>
+                                        <!-- Form to delete the question -->
+                                        <form action="DeleteQuestion.php" method="post">
+                                            <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
+                                            <button type="submit" name="delete_question" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- Button to open the update modal -->
+                                        <button class="btn btn-primary" onclick="openUpdateModal(<?php echo $question['ID']; ?>, '<?php echo $question['QuestionName']; ?>', '<?php echo $question['QuestionDetail']; ?>')">Update</button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($questions as $index => $question): ?>
-                                    <tr>
-                                        <td><?php echo $index + 1; ?></td>
-                                        <td><?php echo $question['QuestionName']; ?></td>
-                                        <td><?php echo $question['QuestionDetail']; ?></td>
-                                        <td>
-                                            <!-- Form to delete the question -->
-                                            <form action="DeleteQuestion.php" method="post">
-                                                <input type="hidden" name="question_id" value='<?php echo $question['ID']; ?>'>
-                                                <button type="submit" name="delete_question" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <!-- Button to open the update modal -->
-                                            <button class="btn btn-primary" onclick="openUpdateModal(<?php echo $question['ID']; ?>, '<?php echo $question['QuestionName']; ?>', '<?php echo $question['QuestionDetail']; ?>')">Update</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php else: ?>
-                        <p>No questions found.</p>
-                    <?php endif; ?>
-                </div>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p>No questions found.</p>
+                <?php endif; ?>
             </div>
         </div>
+    </div>
+
     <!--Notifications Card -->
        <?php 
         include('DisplayMessage.php')
