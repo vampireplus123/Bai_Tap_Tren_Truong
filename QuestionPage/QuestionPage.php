@@ -10,6 +10,7 @@
     } else {
         echo "No question ID found in URL.";
     }
+   
 ?>
 <html>
     <head>
@@ -113,12 +114,23 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div>
-                            <p class="card-text"><?php echo $question['QuestionDetail']; ?></p>
-                        </div>
+                        <!-- Display question detail -->
+                        <p class="card-text"><?php echo $question['QuestionDetail']; ?></p>
+                        <!-- Display uploaded image using the function from DisplayScreenShort.php -->
+                        <?php
+                            // Include the file containing the getQuestionImages() function
+                            include $_SERVER['DOCUMENT_ROOT'] . '/GenralFunction/DisplayScreenShort.php';
+
+                            // Check if $questionImages is set and not empty
+                            if(isset($questionImages) && !empty($questionImages)) {
+                                // Loop through each image and display it
+                                foreach($questionImages as $image) {
+                                    echo '<img src="'.$image.'" style="width: 200px; height: 200px;">';
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
-
             <?php endif; ?>
         </div>   
         <?php
