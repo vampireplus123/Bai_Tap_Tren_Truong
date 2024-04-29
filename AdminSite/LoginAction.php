@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // Replace with your database username
 $password = ""; // Replace with your database password
-$dbname = "questionfield"; // Replace with your database name
+$dbname = "coursework"; // Replace with your database name
 
 // Start session
 session_start();

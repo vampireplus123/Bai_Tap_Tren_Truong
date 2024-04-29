@@ -126,7 +126,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                                 <input type="file" id="uploadImage" name="image" style="display: none;">
                                 <!-- Hidden input fields for database connection details -->
                                 <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
-                                <input type="hidden" name="dbName" id="dbName" value='questionfield'>
+                                <input type="hidden" name="dbName" id="dbName" value='coursework'>
                                 <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
                                 <input type="hidden" name="dbPassword" id="dbPassword" value=''>
                                 <!-- Specify the correct table name -->

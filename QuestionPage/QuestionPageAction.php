@@ -1,7 +1,7 @@
 <?php
 // Include the database connection file or define connection details here
 $host = 'localhost';
-$dbname = 'questionfield';
+$dbname = 'coursework';
 $username = 'root';
 $password = '';        
 

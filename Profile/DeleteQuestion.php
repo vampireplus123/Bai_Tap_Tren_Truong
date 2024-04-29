@@ -4,7 +4,7 @@ session_start();
 
 // Database connection parameters
 $host = 'localhost';
-$dbname = 'questionfield';
+$dbname = 'coursework';
 $username = 'root';
 $password = '';
 

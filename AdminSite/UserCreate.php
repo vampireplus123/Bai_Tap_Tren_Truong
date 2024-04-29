@@ -63,7 +63,7 @@
             $password = $_POST['password'];
 
             // Database connection
-            $dsn = "mysql:host=localhost;dbname=questionfield";
+            $dsn = "mysql:host=localhost;dbname=courswork";
             $db_username = "root";
             $db_password = "";
 

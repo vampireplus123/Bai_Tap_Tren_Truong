@@ -5,7 +5,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "questionfield";
+$database = "coursework";
 
 try {
     // Create a new PDO connection

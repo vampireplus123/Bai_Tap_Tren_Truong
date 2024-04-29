@@ -61,7 +61,7 @@ session_start();
                 <?php
                     // Step 1: Establish a PDO database connection
                     $host = 'localhost'; // Replace with your host
-                    $dbname = 'questionfield'; // Replace with your database name
+                    $dbname = 'coursework'; // Replace with your database name
                     $username = 'root'; // Replace with your username
                     $password = ''; // Replace with your password
 

@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = 'root'; // Replace with your database username
 $password = ''; // Replace with your database password
-$dbname = 'questionfield';
+$dbname = 'coursework';
 
 try {
     // Create a new PDO instance

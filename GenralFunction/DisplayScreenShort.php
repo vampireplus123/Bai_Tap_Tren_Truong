@@ -1,7 +1,7 @@
 <?php
 // Database connection parameters
 $host = 'localhost'; // Change this to your database host
-$dbname = 'questionfield'; // Change this to your database name
+$dbname = 'coursework'; // Change this to your database name
 $username = 'root'; // Change this to your database username
 $password = ''; // Change this to your database password
 

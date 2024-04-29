@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = 'root'; // Replace with your database username
 $password = ''; // Replace with your database password
-$dbname = 'questionfield';
+$dbname = 'coursework';
 
 // Allow user to select table (modify based on your chosen approach)
 $selectedTable = isset($_GET['table']) ? $_GET['table'] : 'questionfield'; // Example using URL parameter

@@ -86,7 +86,7 @@
                                 </label>
                                 <input type="file" id="uploadImage" name="image" style="display: none;">          
                                 <!-- Specify the correct database and table name -->
-                                <input type="hidden" name="dbName" id="dbName" value='questionfield'>
+                                <input type="hidden" name="dbName" id="dbName" value='coursework'>
                                 <input type="hidden" name="tableName" id="tableName" value='image'>
 
                                 <!-- Specify the correct avatar field name -->

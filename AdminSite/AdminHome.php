@@ -57,7 +57,7 @@ session_start();
                         echo '<tbody>';
 
                         // Database connection
-                        $dsn = "mysql:host=localhost;dbname=questionfield";
+                        $dsn = "mysql:host=localhost;dbname=coursework";
                         $username = "root";
                         $password = "";
 

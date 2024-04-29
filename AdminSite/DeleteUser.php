@@ -5,7 +5,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $userID = $_GET['id'];
 
     // Database connection
-    $dsn = "mysql:host=localhost;dbname=questionfield";
+    $dsn = "mysql:host=localhost;dbname=coursework";
     $username = "root";
     $password = "";
 

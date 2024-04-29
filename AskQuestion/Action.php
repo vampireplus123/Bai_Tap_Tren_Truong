@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = 'root'; // Replace with your database username
     $password = ''; // Replace with your database password
-    $dbname = "questionfield"; // Replace with your database name
+    $dbname = "coursework"; // Replace with your database name
     
     try {
         // Create a connection to the database

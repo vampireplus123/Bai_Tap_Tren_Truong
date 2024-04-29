@@ -4,7 +4,7 @@ session_start();
 $servername = "localhost"; // Change this to your database server hostname
 $username = "root"; // Change this to your database username
 $password = ""; // Change this to your database password
-$database = "questionfield"; // Change this to your database name
+$database = "coursework"; // Change this to your database name
 
 // Create connection
 try {

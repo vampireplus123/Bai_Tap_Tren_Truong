@@ -3,7 +3,7 @@ function getAvatar($username) {
     $servername = "localhost";
     $db_username = 'root'; // Replace with your database username
     $db_password = ''; // Replace with your database password
-    $dbname = "questionfield"; 
+    $dbname = "coursework"; 
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $db_username, $db_password);
