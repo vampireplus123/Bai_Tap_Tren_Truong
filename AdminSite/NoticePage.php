@@ -78,8 +78,8 @@ session_start();
                         $admin_id = $_SESSION['admin_id'];
 
                         try {
-                            $stmt = $pdo->prepare("SELECT ID, Title, Detail, Reply FROM notification WHERE UserID = :admin_id");
-                            $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+                            $stmt = $pdo->prepare("SELECT ID, Title, Detail, Reply FROM notification");
+                            // $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
                             $stmt->execute();
                             $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         } catch (PDOException $e) {
