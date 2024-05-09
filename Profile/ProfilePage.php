@@ -120,26 +120,30 @@ include $_SERVER['DOCUMENT_ROOT'] . '/Profile/DisplayProfileAndQuestion.php';
                         </div>
                         <!-- Upload form -->
                         <form action="/GenralFunction/UploadAvatar.php" method="post" enctype="multipart/form-data">
-                                <label for="uploadImage" class="btn btn-outline-primary">
-                                    <i class="fas fa-upload"></i> Upload Image
-                                </label>
-                                <input type="file" id="uploadImage" name="image" style="display: none;">
-                                <!-- Hidden input fields for database connection details -->
-                                <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
-                                <input type="hidden" name="dbName" id="dbName" value='coursework'>
-                                <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
-                                <input type="hidden" name="dbPassword" id="dbPassword" value=''>
-                                <!-- Specify the correct table name -->
-                                <input type="hidden" name="tableName" id="tableName" value='user'>
-                                <!-- Specify the correct avatar field name -->
-                                <input type="hidden" name="avatarField" id="avatarField" value='Avatar'>
-                                <input type="hidden" name="redirectLocation" value="/Profile/ProfilePage.php">
+                            <label for="uploadImage" class="btn btn-outline-primary">
+                                <i class="fas fa-upload"></i> Upload Image
+                            </label>
+                            <input type="file" id="uploadImage" name="image" style="display: none;">
 
-                                <!-- Hidden input fields for condition clause if needed -->
-                                <input type="hidden" name="conditionField" id="conditionField" value='ID'>
-                                <input type="hidden" name="conditionValue" id="conditionValue" value='<?php echo $question_id; ?>'> <!-- Assuming you have $question_id available -->
-                                <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+                            <!-- Hidden input fields for database connection details -->
+                            <input type="hidden" name="dbHost" id="dbHost" value='localhost'>
+                            <input type="hidden" name="dbName" id="dbName" value='coursework'>
+                            <input type="hidden" name="dbUsername" id="dbUsername" value='root'>
+                            <input type="hidden" name="dbPassword" id="dbPassword" value=''>
+                            
+                            <!-- Specify the correct table name -->
+                            <input type="hidden" name="tableName" id="tableName" value='user'>
+                            
+                            <!-- Pass the user identifier (user ID or username) -->
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+
+                            <!-- Specify the correct avatar field name -->
+                            <input type="hidden" name="avatarField" id="avatarField" value='Avatar'>
+                            <input type="hidden" name="redirectLocation" value="/Profile/ProfilePage.php">
+
+                            <input type="submit" name="submit" value="Submit" class="btn btn-primary">
                         </form>
+
                     </div>
                 </div>
                 <!-- Right Card - Profile Information -->
